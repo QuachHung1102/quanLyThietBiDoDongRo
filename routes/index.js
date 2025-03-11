@@ -1,0 +1,12 @@
+var express = require('express');
+var rootRouter = express.Router();
+const { deviceRouter } = require('./devices.routers');
+
+/* GET home page. */
+rootRouter.get('/', function (req, res, next) {
+  res.render('index', { title: 'Express' });
+});
+// use deviceRouter
+rootRouter.use('/devices', deviceRouter);
+
+module.exports = rootRouter;

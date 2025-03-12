@@ -1,6 +1,7 @@
 var express = require('express');
 var rootRouter = express.Router();
 const { deviceRouter } = require('./devices.routers');
+const { userRouter } = require('./user.routers');
 
 /* GET home page. */
 rootRouter.get('/', function (req, res, next) {
@@ -8,5 +9,7 @@ rootRouter.get('/', function (req, res, next) {
 });
 // use deviceRouter
 rootRouter.use('/devices', deviceRouter);
+// use userRouter
+rootRouter.use('/users', userRouter);
 
 module.exports = rootRouter;

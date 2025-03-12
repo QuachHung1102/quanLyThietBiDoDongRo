@@ -23,6 +23,13 @@ module.exports = (sequelize, DataTypes) => {
         },
         notEmpty: true,
         len: [5, 100],
+        // checkLen(value) {
+        //   if (value.length >= 5 && value.length <= 100) {
+        //     return true;
+        //   } else {
+        //     throw new Error(`Độ dài không hợp lệ`); // Đẩy lỗi về.
+        //   }
+        // }
       }
     },
     serialNumber: {
@@ -38,6 +45,10 @@ module.exports = (sequelize, DataTypes) => {
     },
     status: {
       type: DataTypes.STRING,
+      allowNull: true,
+    },
+    lastChecked: {
+      type: DataTypes.DATE,
       allowNull: true,
     },
     type: {

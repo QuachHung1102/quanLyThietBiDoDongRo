@@ -3,7 +3,7 @@ const multer = require('multer');
 const mkdirp = require('mkdirp');
 
 const uploadImage = (type) => {
-    const made = mkdirp.sync(`./public/uploads/images/${type}`);
+    mkdirp.sync(`./public/uploads/images/${type}`);
     const storage = multer.diskStorage({
         destination: function (req, file, cb) {
             cb(null, `./public/uploads/images/${type}`); // setup nơi lưu file

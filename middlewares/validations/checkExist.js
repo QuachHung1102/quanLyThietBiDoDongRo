@@ -1,14 +1,14 @@
 const checkExist = (Model) => {
   return async (req, res, next) => {
-    // Kiểm tra xem device có tồn tại không
+    // Kiểm tra xem đối tượng có tồn tại không
     const { id } = req.params;
-    const device = await Model.findOne({
+    const model = await Model.findOne({
       where: {
         id
       },
     });
-    if (!device) {
-      res.status(404).json({ error: 'Device not found' });
+    if (!model) {
+      res.status(404).json({ error: 'Obbject not found' });
     } else {
       next();
     }

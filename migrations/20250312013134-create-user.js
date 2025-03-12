@@ -1,4 +1,6 @@
 'use strict';
+const roles = ['client', 'admin'];
+
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
@@ -10,26 +12,77 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       firstName: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: 'Please enter the first name',
+          },
+          notEmpty: true,
+          len: [5, 100],
+        }
       },
       lastName: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: 'Please enter the last name',
+          },
+          notEmpty: true,
+          len: [5, 100],
+        }
       },
       email: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false,
+        unique: true,
+        validate: {
+          isEmail: {
+            msg: 'Email is invalid',
+          },
+          notNull: {
+            msg: 'Please enter the email',
+          },
+          notEmpty: true,
+        }
       },
       phoneNumber: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false,
+        unique: true,
+        validate: {
+          isNumeric: {
+            msg: 'Phone number must be numeric',
+          },
+          notNull: {
+            msg: 'Please enter the phone number',
+          },
+          notEmpty: true,
+        }
       },
       password: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: 'Please enter the password',
+          },
+          notEmpty: true,
+        }
       },
       avatar: {
         type: Sequelize.STRING
       },
       type: {
         type: Sequelize.STRING,
-        defaultValue: "client"
+        allowNull: false,
+        defaultValue: 'client',
+        validate: {
+          len: [5, 100],
+          notEmpty: true,
+          isIn: [roles],
+        }
       },
       createdAt: {
         allowNull: false,

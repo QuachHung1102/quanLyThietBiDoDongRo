@@ -14,28 +14,28 @@ module.exports = {
     */
     await queryInterface.bulkInsert('Devices', [
       {
-        deviceName: "Thiết bị đo dòng rò",
+        deviceName: "DV001",
         serialNumber: "000000001",
         status: "1",
-        type: null,
+        type: "1",
         addedBy: "Quách Ngọc Hưng",
         createdAt: "2025-03-11 04:08:10.000",
         updatedAt: "2025-03-11 04:08:10.000"
       },
       {
-        deviceName: "Thiết bị đo dòng rò",
+        deviceName: "DV002",
         serialNumber: "0000000ab",
-        status: "3",
-        type: null,
+        status: "2",
+        type: "1",
         addedBy: "Quách Ngọc Hưng",
         createdAt: "2025-03-11 04:08:10.000",
         updatedAt: "2025-03-11 04:08:10.000"
       },
       {
-        deviceName: "Thiết bị đo dòng rò",
+        deviceName: "DV003",
         serialNumber: "00000azs",
         status: "1",
-        type: null,
+        type: "1",
         addedBy: "Quách Ngọc Hưng",
         createdAt: "2025-03-11 04:08:10.000",
         updatedAt: "2025-03-11 04:08:10.000"

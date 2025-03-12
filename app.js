@@ -10,8 +10,8 @@ const { rootDir1, rootDir2 } = require('./utils/path');
 const indexRouter = require('./routes/index');
 // biến publicPathDirectory chứa đường dẫn đến thư mục public
 const publicPathDirectory = path.join(__dirname, 'public');
-const publicPathDirectory1 = path.join(rootDir1, "./public");
-const publicPathDirectory2 = path.join(rootDir2, "./public");
+const publicPathDirectory1 = path.join(rootDir1, "../public");
+const publicPathDirectory2 = path.join(rootDir2, "../public");
 // biến viewsPathDirectory chứa đường dẫn đến thư mục views
 const viewsPathDirectory = path.join(__dirname, 'views');
 
@@ -30,7 +30,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 // Cài đặt static file
-app.use(express.static(publicPathDirectory1));
+app.use("/public", express.static(publicPathDirectory));
 
 app.use('/', indexRouter);
 

@@ -43,7 +43,26 @@ const getAllMeasurements = async (req, res) => {
   }
 };
 
+const getMeasurementsByID = async (req, res) => {
+  const { deviceId } = req.params;
+  try {
+    const measurementList = await Measurement.findAll({
+      where: {
+        deviceId,
+      }
+    });
+    if (measurementList.length) {
+      res.status(200).json(measurementList);
+    } else {
+      res.status(404).json({ error: 'Device not found' });
+    }
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+}
+
 module.exports = {
   createMeasurement,
   getAllMeasurements,
+  getMeasurementsByID,
 };

@@ -6,9 +6,9 @@ const { Measurement } = require('../models');
 const {
   createMeasurement,
   getAllMeasurements,
+  getMeasurementsByID,
   // updateMeasurement,
   // deleteMeasurement,
-  // getAllMeasurements,
 } = require('../controllers/measurements.controllers');
 // middleware
 const { checkExist } = require('../middlewares/validations/checkExist');
@@ -18,5 +18,6 @@ const type = ['admin', 'superadmin'];
 
 measurementRouter.post('/', createMeasurement);
 measurementRouter.get('/', getAllMeasurements);
+measurementRouter.get('/:deviceId', getMeasurementsByID);
 
 module.exports = { measurementRouter };

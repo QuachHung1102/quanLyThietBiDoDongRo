@@ -1,3 +1,4 @@
+const { where } = require('sequelize');
 const { Permissions } = require('../models');
 const { Device } = require('../models');
 const { User } = require('../models');
@@ -21,6 +22,41 @@ const createPermission = async (req, res) => {
   }
 };
 
+const getAllPermissions = async (req, res) => {
+  const { userId, deviceId } = req.query;
+  try {
+    if (userId && deviceId) {
+      const permisstions = await Permissions.findAll({
+        where: {
+          userId,
+          deviceId
+        }
+      });
+      res.status(200).json(permisstions);
+    } else if (userId) {
+      const permisstions = await Permissions.findAll({
+        where: {
+          userId
+        }
+      });
+      res.status(200).json(permisstions);
+    } else if (deviceId) {
+      const permisstions = await Permissions.findAll({
+        where: {
+          deviceId
+        }
+      });
+      res.status(200).json(permisstions);
+    } else {
+      const permisstions = await Permissions.findAll();
+      res.status(200).json(permisstions);
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: error.message });
+  }
+}
+
 const deletePermission = async (req, res) => {
   const { id } = req.params;
   try {
@@ -40,5 +76,6 @@ const deletePermission = async (req, res) => {
 
 module.exports = {
   createPermission,
-  deletePermission
+  deletePermission,
+  getAllPermissions,
 };

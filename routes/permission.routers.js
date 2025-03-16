@@ -5,7 +5,8 @@ const { Permissions } = require('../models');
 // controllers
 const {
   createPermission,
-  deletePermission
+  getAllPermissions,
+  deletePermission,
 } = require('../controllers/permission.controllers');
 
 // middleware
@@ -15,6 +16,7 @@ const { authorize } = require('../middlewares/auth/authorize');
 const type = ['admin', 'superadmin'];
 
 permissionRouter.post('/', authenticate, authorize(type), createPermission);
+permissionRouter.get('/', getAllPermissions);
 permissionRouter.delete('/:id', authenticate, authorize(type), checkExist(Permissions), deletePermission);
 
 module.exports = { permissionRouter };

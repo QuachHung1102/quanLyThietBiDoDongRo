@@ -7,7 +7,7 @@ const { measurementRouter } = require('./measurements.routers');
 
 /* GET home page. */
 rootRouter.get('/', function (req, res, next) {
-  res.render('index', { title: 'Express' });
+  res.render('index', { pageTitle: "Device Manager", activeClass: "Home" });
 });
 // use deviceRouter
 rootRouter.use('/devices', deviceRouter);

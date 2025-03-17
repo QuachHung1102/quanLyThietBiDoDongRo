@@ -28,8 +28,14 @@ const getAllDevices = async (req, res) => {
     } else {
       const deviceList = await Device.findAll();
       // res.status(200).send(deviceList);
-      // res.status(200).render("devices", { deviceList: deviceList });
-      res.status(200).json(deviceList);
+      res.status(200).render("device/device", {
+        deviceList,
+        deviceListLength: deviceList.length > 0,
+        pageTitle: "Device Manager",
+        activeClass: "Home",
+        activeFormCss: false,
+        path: "/device",
+      });
     }
   } catch (error) {
     res.status(500).json({ error: error.message });

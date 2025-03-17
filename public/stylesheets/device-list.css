@@ -1,0 +1,72 @@
+/* Container chính */
+.device-container {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+/* Danh sách thiết bị */
+.device__item-list {
+  list-style: none;
+  display: flex;
+  justify-content: left;
+  flex-wrap: wrap;
+  gap: 20px; /* Khoảng cách giữa các item */
+}
+
+/* Mỗi thiết bị */
+.device__item {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 15px;
+  width: 300px; /* Chiều rộng cố định */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Hiệu ứng hover */
+.device__item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* Tiêu đề thiết bị */
+.device__name {
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+/* ID thiết bị */
+.device__id {
+  font-size: 1.2rem;
+  color: #666;
+  margin-bottom: 8px;
+}
+
+/* Các thông tin khác */
+.device__type,
+.device__status,
+.device__last-checked {
+  font-size: 1rem;
+  color: #444;
+  margin-bottom: 5px;
+}
+
+/* Tùy chỉnh trạng thái thiết bị */
+.device__status {
+  font-weight: bold;
+}
+
+/* Khi không có thiết bị */
+.device__empty {
+  font-size: 1.5rem;
+  color: #888;
+  text-align: center;
+  padding: 20px;
+}

@@ -17,7 +17,7 @@ const { authorize } = require('../middlewares/auth/authorize');
 const type = ['admin', 'superadmin'];
 
 measurementRouter.post('/', createMeasurement);
-measurementRouter.get('/', getAllMeasurements);
+measurementRouter.get('/all', getAllMeasurements);
 measurementRouter.get('/:deviceId', getMeasurementsByID);
 
 module.exports = { measurementRouter };

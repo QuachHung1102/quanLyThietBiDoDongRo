@@ -1,29 +1,36 @@
-nav#sidebar.active 
+nav#sidebar
   .sidebar-header#sidebar-title 
     h3
-      i.bi.bi-envelope-paper-heart-fill
+      i.fa-solid.fa-bolt
       |  Manager
     strong
       i.bi.bi-list
 
   ul.list-unstyled.components
-    li
+    li(class=(activeClass === 'Home' ? 'active' : ''))
       a(href="#") 
         i.bi.bi-house-door-fill
         | Home
-    li
+    li(class=(activeClass === 'Edit' ? 'active' : ''))
       a(href="#") 
         i.bi.bi-pencil-square
         | Edit
-    li
+    li(class=(activeClass === 'Search' ? 'active' : ''))
       a(href="#") 
-        i.bi.bi-house-door-fill
+        i.bi.bi-search
         | Search
-    li
+    li(class=(activeClass === 'Users' ? 'active' : ''))
       a(href="#") 
-        i.bi.bi-house-door-fill
-        | Breed
-    li
+        i.bi.bi-list-ul
+        | Users
+    li(class=(activeClass === 'Measurement' ? 'active' : ''))
       a(href="#") 
-        i.bi.bi-house-door-fill
+        i.bi.bi-clipboard-data
         | Data
+
+  script.
+    const sidebarTitleEl = document.getElementById('sidebar-title');
+    const sidebarEl = document.getElementById('sidebar');
+    sidebarTitleEl.addEventListener('click', function () {
+      sidebarEl.classList.toggle('active');
+    });

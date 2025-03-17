@@ -1,5 +1,6 @@
 const { where } = require('sequelize');
 const { Measurement, Device } = require('../models');
+const socket = require('../socket');
 
 const createMeasurement = async (req, res) => {
   try {
@@ -16,7 +17,9 @@ const createMeasurement = async (req, res) => {
     if (!device) {
       return res.status(404).json({ error: 'Device not exist' });
     }
-    const newMeasurement = await Measurement.create({ ...data });
+    const newMeasurement = await Measurement.create({ ...data, measuredAt: new Date() });
+    const io = socket.getIO();
+    io.to(`device:${data.deviceId}`).emit('newMeasurement', newMeasurement);
     res.status(201).json(newMeasurement);
   } catch (error) {
     console.log(error);

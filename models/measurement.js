@@ -33,7 +33,6 @@ module.exports = (sequelize, DataTypes) => {
     measuredAt: {
       type: DataTypes.DATE,
       allowNull: false,
-      defaultValue: new Date(),
     }
   }, {
     sequelize,

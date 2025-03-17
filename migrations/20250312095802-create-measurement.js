@@ -40,7 +40,6 @@ module.exports = {
       measuredAt: {
         type: Sequelize.DATE,
         allowNull: false,
-        defaultValue: new Date(),
       },
       createdAt: {
         allowNull: false,

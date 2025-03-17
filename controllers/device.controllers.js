@@ -34,6 +34,7 @@ const getAllDevices = async (req, res) => {
         pageTitle: "Device Manager",
         activeClass: "Home",
         activeFormCss: false,
+        alert: false,
         path: "/device",
       });
     }

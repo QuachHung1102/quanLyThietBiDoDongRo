@@ -1,21 +1,21 @@
 extends ../layouts/layout.pug
 
 block styles
-  link(rel="stylesheet" href="public/stylesheets/style.css")
-  link(rel="stylesheet" href="public/stylesheets/device-list.css")
+  link(rel="stylesheet" href="/public/stylesheets/style.css")
+  link(rel="stylesheet" href="/public/stylesheets/device-list.css")
 
 block content
   div.device-container
     if deviceListLength
       ul.device__item-list
         each element in deviceList
-          li.device__item
-            a(href=`/measurements/${element.id}`)
+          li.device__item(class=(alert ? 'alert' : 'normal'))
+            a(href=`/measurements/page/${element.id}`)
               h3.device__name #{element.deviceName}
               h4.device__id Device ID: #{element.id}
               p.device__type Type: #{element.type}
               p.device__status Status: #{element.status}
-              p.device__last-checked Last Checked: #{element.lastChecked ? element.lastChecked : 'Never'} 
+              p.device__last-checked Last Checked: #{element.lastChecked ? element.lastChecked : 'Never'}
     else 
       h3.device__empty No devices found
 

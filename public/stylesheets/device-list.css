@@ -24,9 +24,18 @@
   border: 1px solid #ddd;
   border-radius: 8px;
   padding: 15px;
-  width: 300px; /* Chiều rộng cố định */
+  width: 30%; /* Chiều rộng cố định */
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.device__item.normal {
+  background-color: #5cfc82; /* Xanh lá */
+}
+.device__item.alert {
+  background-color: #ec4253; /* Đỏ */
 }
 
 /* Hiệu ứng hover */
@@ -45,7 +54,7 @@
 /* ID thiết bị */
 .device__id {
   font-size: 1.2rem;
-  color: #666;
+  color: #000;
   margin-bottom: 8px;
 }
 
@@ -69,4 +78,10 @@
   color: #888;
   text-align: center;
   padding: 20px;
+}
+
+@media (max-width: 600px) {
+  .device__item {
+    width: 100%; /* Chiếm toàn bộ chiều rộng */
+  }
 }

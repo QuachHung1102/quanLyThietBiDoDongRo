@@ -1,4 +1,4 @@
-const { where } = require('sequelize');
+const { where, Op } = require('sequelize');
 const { Measurement, Device } = require('../models');
 const socket = require('../socket');
 
@@ -64,8 +64,42 @@ const getMeasurementsByID = async (req, res) => {
   }
 }
 
+const getMeasurementsPageByID = async (req, res) => {
+  const { deviceId } = req.params;
+  try {
+    const device = await Device.findOne({
+      where: {
+        id: deviceId,
+      }
+    });
+    const measurementList = await Measurement.findAll({
+      where: {
+        deviceId,
+      },
+      order: [['measuredAt', 'DESC']],
+      limit: 10,
+    })
+    if (measurementList.length) {
+      res.status(200).render('measurement/measurement', {
+        measurementList,
+        device,
+        pageTitle: 'Measurement Manager',
+        activeClass: 'Measurement',
+        activeFormCss: false,
+        path: '/measurement',
+      });
+    } else {
+      res.status(404).render('error', { error: 'Device not found' });
+    }
+  } catch (error) {
+    res.status(500).render('error', { error });
+  }
+
+};
+
 module.exports = {
   createMeasurement,
   getAllMeasurements,
   getMeasurementsByID,
+  getMeasurementsPageByID,
 };

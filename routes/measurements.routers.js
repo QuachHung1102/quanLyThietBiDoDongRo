@@ -7,6 +7,7 @@ const {
   createMeasurement,
   getAllMeasurements,
   getMeasurementsByID,
+  getMeasurementsPageByID,
   // updateMeasurement,
   // deleteMeasurement,
 } = require('../controllers/measurements.controllers');
@@ -18,6 +19,7 @@ const type = ['admin', 'superadmin'];
 
 measurementRouter.post('/', createMeasurement);
 measurementRouter.get('/all', getAllMeasurements);
+measurementRouter.get('/page/:deviceId', getMeasurementsPageByID);
 measurementRouter.get('/:deviceId', getMeasurementsByID);
 
 module.exports = { measurementRouter };

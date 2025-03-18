@@ -21,15 +21,24 @@ block content
         .item-5.item 
           .device-info 
             h3 Device Information
-            p Device ID: <span id="deviceId"></span>
-            p Device Name: <span id="deviceName"></span>
-            p Device Type: <span id="deviceType"></span>
-            p Last Checked: <span id="lastChecked"></span>
+            p Device ID: 
+              span#deviceId #{device.id}
+            p Device Name: 
+              span#deviceName #{device.deviceName}
+            p Device Type: 
+              span#deviceType #{device.type}
+            p Last Checked: 
+              span#lastChecked #{device.lastChecked ? device.lastChecked : 'Never'}
             div.battery-level
-              label(for="battery") Battery Level:
-              progress(id="battery" max="100" value="0")
+              label(for="battery") Battery Level: 
+              progress(id="battery" max="100" value="0" style="width: 85%; height: 30px")
               span(id="batteryPercent") 0%
             .alert-level(id="alertLevelBox")
 
 block scripts
-  //- script(src="/public/javascripts/chartData.js")
+  script.
+    const measurementData = !{JSON.stringify(measurementList)};
+    const deviceData = !{JSON.stringify(device)};
+  script(src="https://cdn.socket.io/4.8.1/socket.io.min.js")
+  script(src="https://cdn.jsdelivr.net/npm/chart.js")
+  script(src="/public/javascripts/chartData.js")

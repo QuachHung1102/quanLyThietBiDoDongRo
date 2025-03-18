@@ -9,6 +9,7 @@ const {
   updateDevice,
   deleteDevice,
   getAllDevices,
+  getAllDevicesPage,
 } = require('../controllers/device.controllers');
 // middleware
 const { checkExist } = require('../middlewares/validations/checkExist');
@@ -18,6 +19,7 @@ const type = ['admin', 'superadmin'];
 
 deviceRouter.post('/', authenticate, authorize(type), createDevice);
 deviceRouter.get('/', getAllDevices);
+deviceRouter.get('/page', getAllDevicesPage);
 deviceRouter.get('/:id', getDetailDevice);
 deviceRouter.put('/:id', authenticate, authorize(type), checkExist(Device), updateDevice);
 deviceRouter.delete('/:id', authenticate, authorize(type), checkExist(Device), deleteDevice);

@@ -17,6 +17,27 @@ const getAllDevices = async (req, res) => {
   const { deviceName } = req.query;
   try {
     if (deviceName) {
+      const deviceList = await Device.findAll({
+        where: {
+          deviceName: {
+            [Op.iLike]: `%${deviceName}%`
+          }
+        }
+      });
+      res.status(200).send(deviceList);
+    } else {
+      const deviceList = await Device.findAll();
+      res.status(200).send(deviceList);
+    }
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+}
+
+const getAllDevicesPage = async (req, res) => {
+  const { deviceName } = req.query;
+  try {
+    if (deviceName) {
       const deviceList = await Device.finAll({
         where: {
           deviceName: {
@@ -102,6 +123,7 @@ const deleteDevice = async (req, res) => {
 module.exports = {
   createDevice,
   getAllDevices,
+  getAllDevicesPage,
   getDetailDevice,
   updateDevice,
   deleteDevice,

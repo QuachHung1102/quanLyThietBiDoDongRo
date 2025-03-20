@@ -3,6 +3,7 @@ extends ../layouts/layout.pug
 block styles
   link(rel="stylesheet" href="/public/stylesheets/style.css")
   link(rel="stylesheet" href="/public/stylesheets/measurement.css")
+  link(rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/v3.10.0/mapbox-gl.css")
 
 block content
   .measurement-container
@@ -18,22 +19,23 @@ block content
           canvas#chart3
         .item-4.item  
           canvas#chart4
-        .item-5.item 
-          .device-info 
-            h3 Device Information
-            p Device ID: 
-              span#deviceId #{device.id}
-            p Device Name: 
-              span#deviceName #{device.deviceName}
-            p Device Type: 
-              span#deviceType #{device.type}
-            p Last Checked: 
-              span#lastChecked #{device.lastChecked ? device.lastChecked : 'Never'}
-            div.battery-level
-              label(for="battery") Battery Level: 
-              progress(id="battery" max="100" value="0" style="width: 85%; height: 30px")
-              span(id="batteryPercent") 0%
-            .alert-level(id="alertLevelBox")
+        .item-5.item
+          #map(style="height: 100%;")
+    .device-info 
+      h3 Device Information
+      p Device ID: 
+        span#deviceId #{device.id}
+      p Device Name: 
+        span#deviceName #{device.deviceName}
+      p Device Type: 
+        span#deviceType #{device.type}
+      p Last Checked: 
+        span#lastChecked #{device.lastChecked ? device.lastChecked : 'Never'}
+      div.battery-level
+        label(for="battery") Battery Level: 
+        progress(id="battery" max="100" value="0" style="width: 85%; height: 30px")
+        span(id="batteryPercent") 0%
+      .alert-level(id="alertLevelBox")
 
 block scripts
   script.
@@ -41,4 +43,6 @@ block scripts
     const deviceData = !{JSON.stringify(device)};
   script(src="https://cdn.socket.io/4.8.1/socket.io.min.js")
   script(src="https://cdn.jsdelivr.net/npm/chart.js")
+  script(src="https://api.mapbox.com/mapbox-gl-js/v3.10.0/mapbox-gl.js") 
   script(src="/public/javascripts/chartData.js")
+  script(src="/public/javascripts/mapbox.js" defer type="module") 

@@ -232,6 +232,10 @@ td {
     vertical-align: middle;
 }
 
+.controller__title {
+    margin-bottom: 1rem;
+}
+
 /* ---------------------------------------------------
     MEDIAQUERIES
 ----------------------------------------------------- */

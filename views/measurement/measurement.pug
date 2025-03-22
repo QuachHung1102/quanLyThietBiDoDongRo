@@ -7,8 +7,26 @@ block styles
 
 block content
   .measurement-container
-    .controller__title
-      h1 Measurement Data
+    .device-info.card
+      h3 Device Information
+      .device-info__grid
+        .device-info__item
+          i.fa.fa-id-badge
+          span Device ID: #{device.id}
+        .device-info__item
+          i.fa.fa-tag
+          span Device Name: #{device.deviceName}
+        .device-info__item
+          i.fa.fa-cogs
+          span Device Type: #{device.type}
+        .device-info__item
+          i.fa.fa-calendar-alt
+          span Last Checked: #{device.lastChecked ? device.lastChecked : 'Never'}
+        .device-info__item.battery
+          i.fa.fa-battery-half
+          span Battery Level: 
+          progress(id="battery" max="100" value="0")
+          span(id="batteryPercent") 0%
     .measurement__content
       .chart__container 
         .item-1.item 
@@ -21,20 +39,6 @@ block content
           canvas#chart4
         .item-5.item
           #map(style="height: 100%;")
-    .device-info 
-      h3 Device Information
-      p Device ID: 
-        span#deviceId #{device.id}
-      p Device Name: 
-        span#deviceName #{device.deviceName}
-      p Device Type: 
-        span#deviceType #{device.type}
-      p Last Checked: 
-        span#lastChecked #{device.lastChecked ? device.lastChecked : 'Never'}
-      div.battery-level
-        label(for="battery") Battery Level: 
-        progress(id="battery" max="100" value="0" style="width: 85%; height: 30px")
-        span(id="batteryPercent") 0%
 
 block scripts
   script.
@@ -45,4 +49,4 @@ block scripts
   script(src="https://cdn.socket.io/4.8.1/socket.io.min.js")
   script(src="/public/javascripts/socket.js") 
   script(src="/public/javascripts/chartData.js")
-  script(src="/public/javascripts/mapbox.js" defer type="module") 
+  script(src="/public/javascripts/mapbox.js" defer type="module")

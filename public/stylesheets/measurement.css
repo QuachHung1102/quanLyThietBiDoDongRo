@@ -123,6 +123,93 @@
   color: white;
 }
 
+.device-info.card {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 1rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1.5rem;
+  width: 60%;
+  margin: auto;
+}
+
+.device-info.card h3 {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.device-info__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.5rem;
+}
+
+.device-info__item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  color: #555;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.device-info__item:last-child {
+  border-bottom: none; /* Remove separator for the last item */
+}
+
+.device-info__item i {
+  font-size: 1.2rem;
+  color: #007bff;
+  width: 1.5rem; /* Set a fixed width for consistent alignment */
+  text-align: center; /* Center the icon within the fixed width */
+}
+
+.device-info__item span {
+  display: inline-block;
+}
+
+.device-info__item.battery progress {
+  flex-grow: 1;
+  margin: 0 0.5rem;
+}
+
+.device-info__item.battery span#batteryPercent {
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.battery-level {
+  display: flex;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.battery-level i {
+  font-size: 1.2rem;
+  color: #007bff;
+  margin-right: 0.5rem;
+}
+
+.battery-level label {
+  margin-right: 0.5rem;
+  font-size: 1rem;
+  color: #555;
+}
+
+.battery-level progress {
+  flex-grow: 1;
+  margin-right: 0.5rem;
+}
+
+.battery-level span#batteryPercent {
+  font-size: 1rem;
+  color: #555;
+}
+
 @media screen and (min-width: 1200.1) {
   .measurement__content {
     height: 100vh !important;

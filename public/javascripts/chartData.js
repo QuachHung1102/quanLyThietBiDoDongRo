@@ -1,6 +1,7 @@
 console.log(measurementData);
 console.log(deviceData);
 
+let currentBatteryLevel;
 const chartDoom1 = document.getElementById("chart1");
 const chartDoom2 = document.getElementById("chart2");
 const chartDoom3 = document.getElementById("chart3");
@@ -209,7 +210,7 @@ socket.on('newMeasurement', (measurement) => {
   updateChart(chart2, measurement, 'temperature');
   updateChart(chart3, measurement, 'humidity');
   updateChart(chart4, measurement, 'powerLoss');
-  // updateDeviceInfo(measurement);
+  updateDeviceInfo(measurement);
 });
 
 function updateChart(chart, measurement, key) {
@@ -227,7 +228,14 @@ function updateChart(chart, measurement, key) {
   chart.update();
 }
 
-
+function updateDeviceInfo(measurement) {
+  console.log(11111111);
+  if (currentBatteryLevel !== measurement.batteryLevel) {
+    document.getElementById('battery').value = measurement.batteryLevel;
+    document.getElementById('batteryPercent').textContent = `${measurement.batteryLevel}%`;
+    currentBatteryLevel = measurement.batteryLevel;
+  }
+}
 
 function getAlertLevelText(level) {
   switch (level) {

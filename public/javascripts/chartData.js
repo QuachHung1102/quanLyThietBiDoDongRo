@@ -43,7 +43,7 @@ const chart1 = new Chart(chartDoom1, {
     labels: labels(),
     datasets: [
       {
-        label: 'Leakage Current',
+        label: 'Leakage Current (Ampere)',
         data: dataStart('leakageCurrent'),
         backgroundColor: [
           // "rgba(255, 99, 132, 0.2)", // Màu đỏ
@@ -65,7 +65,15 @@ const chart1 = new Chart(chartDoom1, {
       }
     ]
   },
-  options: { scales: { x: {}, } }
+  options: {
+    scales: {
+      x: {},
+      y: {
+        min: 0,
+        max: Math.ceil(Math.max(...dataStart('leakageCurrent')) * 2),
+      }
+    }
+  }
 });
 
 const chart2 = new Chart(chartDoom2, {
@@ -74,7 +82,7 @@ const chart2 = new Chart(chartDoom2, {
     labels: labels(),
     datasets: [
       {
-        label: 'Temperature',
+        label: 'Temperature (°C)',
         data: dataStart('temperature'),
         backgroundColor: [
           "rgba(255, 99, 132, 0.2)", // Màu đỏ
@@ -95,7 +103,15 @@ const chart2 = new Chart(chartDoom2, {
         borderWidth: 1,
       }]
   },
-  options: { scales: { x: {}, } }
+  options: {
+    scales: {
+      x: {},
+      y: {
+        min: 0,
+        max: 100,
+      }
+    }
+  }
 });
 
 const chart3 = new Chart(chartDoom3, {
@@ -104,7 +120,7 @@ const chart3 = new Chart(chartDoom3, {
     labels: labels(),
     datasets: [
       {
-        label: 'Humidity',
+        label: 'Humidity (%)',
         data: dataStart('humidity'),
         backgroundColor: [
           // "rgba(255, 99, 132, 0.2)", // Màu đỏ
@@ -125,7 +141,15 @@ const chart3 = new Chart(chartDoom3, {
         borderWidth: 1,
       }]
   },
-  options: { scales: { x: {}, } }
+  options: {
+    scales: {
+      x: {},
+      y: {
+        min: 0,
+        max: 100,
+      }
+    }
+  }
 });
 
 const chart4 = new Chart(chartDoom4, {
@@ -134,7 +158,7 @@ const chart4 = new Chart(chartDoom4, {
     labels: labels(),
     datasets: [
       {
-        label: 'PowerLoss',
+        label: 'PowerLoss (Watt)',
         data: dataStart('powerLoss'),
         backgroundColor: [
           // "rgba(255, 99, 132, 0.2)", // Màu đỏ
@@ -155,23 +179,51 @@ const chart4 = new Chart(chartDoom4, {
         borderWidth: 1,
       }]
   },
-  options: { scales: { x: {}, } }
+  options: {
+    scales: {
+      x: {},
+      y: {
+        min: 0,
+        max: 50,
+      }
+    }
+  }
 });
 
-// socket.on('newMeasurement', (measurement) => {
-//   updateChart(chart1, measurement, 'leakageCurrent');
-//   updateChart(chart2, measurement, 'temperature');
-//   updateChart(chart3, measurement, 'humidity');
-//   updateChart(chart4, measurement, 'powerLoss');
-//   updateDeviceInfo(measurement);
-// });
+// Tham gia theo dõi thiết bị
+socket.on('connect', () => {
+  console.log(`Connected to socket server`);
+  socket.emit('joinDevice', deviceData.id);
+})
+
+socket.on('connect_error', (err) => {
+  console.log('Connection error:', err.message);
+});
+
+socket.on('disconnect', (reason) => {
+  console.log('Disconnected:', reason);
+});
+
+socket.on('newMeasurement', (measurement) => {
+  updateChart(chart1, measurement, 'leakageCurrent');
+  updateChart(chart2, measurement, 'temperature');
+  updateChart(chart3, measurement, 'humidity');
+  updateChart(chart4, measurement, 'powerLoss');
+  // updateDeviceInfo(measurement);
+});
 
 function updateChart(chart, measurement, key) {
-  // const time = new Date(measurement.measuredAt);
-  // chart.data.datasets[0].data.push({ x: time, y: measurement[key] });
-  // const now = new Date();
-  // const oneHourAgo = new Date(now - 3600000);
-  // chart.data.datasets[0].data = chart.data.datasets[0].data.filter(point => point.x >= oneHourAgo);
+  const dateUpdate = new Date(measurement.measuredAt);
+  const hours = dateUpdate.getHours();
+  const minutes = dateUpdate.getMinutes();
+  const time = `${hours}:${minutes}`;
+  const length = chart.data.labels.length;
+  chart.data.labels.push(time);
+  chart.data.datasets[0].data.push(measurement[key]);
+  if (length == 10) {
+    chart.data.labels.shift(time);
+    chart.data.datasets[0].data.shift(measurement[key]);
+  }
   chart.update();
 }
 

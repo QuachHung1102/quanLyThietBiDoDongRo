@@ -5,7 +5,7 @@ const bcrypt = require("bcrypt");
 const saltRounds = 10;
 // Jsonwebtoken
 const jwt = require("jsonwebtoken");
-const secretOrPrivateKey = "quachngochung";
+const secretOrPrivateKey = process.env.JWT_SECRET_KEY;
 const expiresIn = "24h";
 // Gravatar-url
 // const gravatarUrl = require('gravatar-url');
@@ -56,10 +56,16 @@ const login = async (req, res) => {
     if (user) {
       if (bcrypt.compareSync(password, user.password)) {
         const token = jwt.sign(
-          { email: user.email, type: user.type },
+          { id: user.id, name: user.firstName + user.lastName, email: user.email, type: user.type, },
           secretOrPrivateKey,
           { expiresIn: expiresIn }
         );
+        res.cookie('jwt', token, {
+          httpOnly: true, // Bảo mật: ngăn JavaScript truy cập cookie
+          secure: process.env.NODE_ENV === 'production', // Chỉ gửi qua HTTPS trong production
+          sameSite: 'strict', // Ngăn chặn CSRF
+          maxAge: 24 * 60 * 60 * 1000 // Thời gian sống của cookie (1 ngày)
+        })
         res.status(200).send({ message: "Password Correct", token });
         // res.status(302).redirect('/');
       } else {

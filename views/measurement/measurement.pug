@@ -35,14 +35,14 @@ block content
         label(for="battery") Battery Level: 
         progress(id="battery" max="100" value="0" style="width: 85%; height: 30px")
         span(id="batteryPercent") 0%
-      .alert-level(id="alertLevelBox")
 
 block scripts
   script.
     const measurementData = !{JSON.stringify(measurementList)};
     const deviceData = !{JSON.stringify(device)};
-  script(src="https://cdn.socket.io/4.8.1/socket.io.min.js")
   script(src="https://cdn.jsdelivr.net/npm/chart.js")
-  script(src="https://api.mapbox.com/mapbox-gl-js/v3.10.0/mapbox-gl.js") 
+  script(src="https://api.mapbox.com/mapbox-gl-js/v3.10.0/mapbox-gl.js")
+  script(src="https://cdn.socket.io/4.8.1/socket.io.min.js")
+  script(src="/public/javascripts/socket.js") 
   script(src="/public/javascripts/chartData.js")
   script(src="/public/javascripts/mapbox.js" defer type="module") 

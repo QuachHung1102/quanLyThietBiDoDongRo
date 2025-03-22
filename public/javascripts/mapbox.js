@@ -7,24 +7,24 @@ const geojson = {
       type: 'Feature',
       geometry: {
         type: 'Point',
-        coordinates: [-77.032, 38.913]
+        coordinates: [-77.032, 38.913],
       },
       properties: {
         title: 'Device',
         description: 'Washington, D.C.'
       }
     },
-    {
-      type: 'Feature',
-      geometry: {
-        type: 'Point',
-        coordinates: [-122.414, 37.776]
-      },
-      properties: {
-        title: 'Device',
-        description: 'San Francisco, California'
-      }
-    }
+    // {
+    //   type: 'Feature',
+    //   geometry: {
+    //     type: 'Point',
+    //     coordinates: [-122.414, 37.776]
+    //   },
+    //   properties: {
+    //     title: 'Device',
+    //     description: 'San Francisco, California'
+    //   }
+    // }
   ]
 };
 
@@ -32,8 +32,10 @@ const map = new mapboxgl.Map({
   container: 'map',
   style: 'mapbox://styles/mapbox/streets-v12',
   projection: 'globe', // Display the map as a globe, since satellite-v9 defaults to Mercator
-  zoom: 1.4,
-  center: [30, 15]
+  zoom: 18, // starting zoom
+  // pitch: 45, // starting pitch (tilt) in degrees
+  center: [-77.032, 38.913], // starting position [lng, lat]
+  // bearing: -60, // bearing in degrees (clockwise) 
 });
 
 map.addControl(new mapboxgl.NavigationControl());
@@ -66,7 +68,7 @@ for (const feature of geojson.features) {
 // The following values can be changed to control rotation speed:
 
 // At low zooms, complete a revolution every two minutes.
-const secondsPerRevolution = 20;
+const secondsPerRevolution = 200;
 // Above zoom level 5, do not rotate.
 const maxSpinZoom = 5;
 // Rotate at intermediate speeds between zoom levels 3 and 5.

@@ -16,6 +16,25 @@ const checkExist = (Model) => {
   }
 }
 
+const checkDeviceExist = (Model) => {
+  return async (req, res, next) => {
+    // Kiểm tra xem đối tượng có tồn tại không
+    const { deviceId } = req.params;
+    const model = await Model.findOne({
+      where: {
+        deviceId
+      },
+    });
+    if (!model) {
+      res.status(404).json({ error: 'Obbject not found' });
+    } else {
+      next();
+    }
+    // Nếu tồn tại thì gán device vào req.device
+  }
+}
+
 module.exports = {
-  checkExist
+  checkExist,
+  checkDeviceExist
 };

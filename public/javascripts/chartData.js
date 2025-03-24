@@ -1,5 +1,4 @@
-console.log(measurementData);
-console.log(deviceData);
+'use strict';
 
 let currentBatteryLevel;
 const chartDoom1 = document.getElementById("chart1");
@@ -71,7 +70,7 @@ const chart1 = new Chart(chartDoom1, {
       x: {},
       y: {
         min: 0,
-        max: Math.ceil(Math.max(...dataStart('leakageCurrent')) * 2),
+        max: 1,
       }
     }
   }
@@ -191,6 +190,10 @@ const chart4 = new Chart(chartDoom4, {
   }
 });
 
+(function () {
+  updateDeviceInfo(measurementData[measurementData.length - 1]);
+})();
+
 // Tham gia theo dõi thiết bị
 socket.on('connect', () => {
   console.log(`Connected to socket server`);
@@ -229,7 +232,6 @@ function updateChart(chart, measurement, key) {
 }
 
 function updateDeviceInfo(measurement) {
-  console.log(11111111);
   if (currentBatteryLevel !== measurement.batteryLevel) {
     document.getElementById('battery').value = measurement.batteryLevel;
     document.getElementById('batteryPercent').textContent = `${measurement.batteryLevel}%`;

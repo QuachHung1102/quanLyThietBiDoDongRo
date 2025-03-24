@@ -2,7 +2,9 @@ const express = require('express');
 const userRouter = express.Router();
 // controllers
 const {
+  getRegisterPage,
   register,
+  getLoginPage,
   login,
   getAllUsers,
   updateUser,
@@ -16,8 +18,9 @@ const { authorize } = require('../middlewares/auth/authorize');
 const type = ['admin', 'superadmin'];
 const { uploadImage } = require('../middlewares/upload/upload-img');
 
-
+userRouter.get('/register-page', getRegisterPage);
 userRouter.post('/register', register);
+userRouter.get('/login-page', getLoginPage);
 userRouter.post('/login', login);
 userRouter.post('/upload-avatar', authenticate, uploadImage(`avatar`), uploadAvatar);
 userRouter.get('/', authenticate, authorize(type), getAllUsers);

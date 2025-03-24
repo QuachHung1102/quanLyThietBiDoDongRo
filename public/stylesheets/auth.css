@@ -1,0 +1,109 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Poppins", sans-serif;
+  background: url('../images/background.png') no-repeat center center fixed;
+  background-size: cover;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.auth-container {
+  max-width: 500px; /* Increased width */
+  /* min-width: 450px; */
+  width: 40%;
+  margin: auto;
+  padding: 3rem;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 15px;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+  background: rgba(255, 255, 255, 0.9); /* Add transparency to the container */
+  backdrop-filter: blur(10px); /* Add a blur effect for a modern look */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.auth-container h2 {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #333;
+  font-size: 2rem;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+  color: #555;
+  font-weight: 600;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 0.7rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-group input:focus {
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+}
+
+.form-group button {
+  width: 100%;
+  padding: 0.8rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.form-group button:hover {
+  background-color: #0056b3;
+  transform: scale(1.05);
+}
+
+.auth-container p {
+  text-align: center;
+  margin-top: 1.5rem;
+  font-size: 1rem;
+  color: #555;
+}
+
+.auth-container p a {
+  color: #007bff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.auth-container p a:hover {
+  text-decoration: underline;
+}
+
+.auth-container::before {
+  content: '';
+  display: block;
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 1rem;
+  background: url('/public/images/auth-icon.png') no-repeat center center;
+  background-size: contain;
+}

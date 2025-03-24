@@ -1,3 +1,28 @@
-nav.navbar.navbar-expand-lg.navbar-light.bg-light
+nav.navbar.navbar-expand-lg.bg-body-tertiary
   .container-fluid
     a.navbar-brand(href="#") Device Management
+    div
+      ul.navbar-nav.me-auto.mb-2.mb-lg-0
+        li.nav-item.hidden
+          a.nav-link(href="/admin") Admin Panel
+        li.nav-item.dropdown
+          a.nav-link.dropdown-toggle(href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false") Dropdown
+          ul.dropdown-menu
+            li
+              a.dropdown-item(href="#") Account
+            li
+              hr.dropdown-divider
+            li
+              p.dropdown-item User Name
+            li
+              a.dropdown-item(href="#") Logout
+
+script.
+  let user;
+  let token;
+
+  // get user in localStorage
+  if (typeof Storage !== 'undefined') {
+    user = JSON.parse(localStorage.getItem('user'));
+    token = JSON.parse(localStorage.getItem('token'));
+  }

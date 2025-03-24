@@ -1,0 +1,29 @@
+extends ../layouts/layout.pug
+
+block styles
+  link(rel="stylesheet" href="/public/stylesheets/auth.css")
+
+block sidebar
+  // No sidebar for login page
+
+block navbar
+  // No navbar for register page
+
+block content
+  .auth-container
+    h2 Login
+    form(id="loginForm")
+      .form-group
+        label(for="email") Email:
+        input#email(type="email" name="email" required)
+      .form-group
+        label(for="password") Password:
+        input#password(type="password" name="password" required)
+      .form-group
+        button(type="submit") Login
+    p
+      | Don't have an account? 
+      a(href="/users/register-page") Register here.
+
+block scripts
+  script(src="/public/javascripts/login.js" type="module") 

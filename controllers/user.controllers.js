@@ -24,6 +24,18 @@ const getGravatarURL = (email) => {
   return `https://www.gravatar.com/avatar/${hash}`;
 };
 
+const getRegisterPage = async (req, res) => {
+  try {
+    res.status(200).render('auth/register', {
+      pageTitle: 'Register',
+      path: '/register',
+      authPage: true,
+    });
+  } catch (error) {
+    res.status(500).render('error', { error });
+  }
+}
+
 const register = async (req, res) => {
   const { firstName, lastName, email, phoneNumber, password } = req.body;
   try {
@@ -49,6 +61,18 @@ const register = async (req, res) => {
   }
 };
 
+const getLoginPage = async (req, res) => {
+  try {
+    res.status(200).render('auth/login', {
+      pageTitle: 'Login',
+      path: '/login',
+      authPage: true,
+    });
+  } catch (error) {
+    res.status(500).render('error', { error });
+  }
+}
+
 const login = async (req, res) => {
   const { email, password } = req.body;
   try {
@@ -66,8 +90,17 @@ const login = async (req, res) => {
           sameSite: 'strict', // Ngăn chặn CSRF
           maxAge: 24 * 60 * 60 * 1000 // Thời gian sống của cookie (1 ngày)
         })
-        res.status(200).send({ message: "Password Correct", token });
-        // res.status(302).redirect('/');
+        res.status(200).json(
+          {
+            message: "Password Correct",
+            token: token,
+            user: {
+              type: user.type,
+              name: user.firstName + user.lastName,
+              avatar: user.avatar,
+            }
+          }
+        );
       } else {
         res.status(401).send("Invalid Password!");
       }
@@ -177,7 +210,9 @@ const uploadAvatar = async (req, res) => {
 };
 
 module.exports = {
+  getRegisterPage,
   register,
+  getLoginPage,
   login,
   getAllUsers,
   updateUser,

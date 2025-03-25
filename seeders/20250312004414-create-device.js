@@ -19,24 +19,37 @@ module.exports = {
         status: "1",
         type: "1",
         addedBy: "Quách Ngọc Hưng",
+        coordinates: Sequelize.fn('ST_GeomFromText', `POINT(9.906674 105.849961 )`, 4326),
         createdAt: "2025-03-11 04:08:10.000",
         updatedAt: "2025-03-11 04:08:10.000"
       },
       {
         deviceName: "DV002",
-        serialNumber: "0000000ab",
-        status: "2",
+        serialNumber: "000000002",
+        status: "1",
         type: "1",
         addedBy: "Quách Ngọc Hưng",
+        coordinates: Sequelize.fn('ST_GeomFromText', `POINT(9.896331 105.864997)`, 4326),
         createdAt: "2025-03-11 04:08:10.000",
         updatedAt: "2025-03-11 04:08:10.000"
       },
       {
         deviceName: "DV003",
-        serialNumber: "00000azs",
+        serialNumber: "000000003",
         status: "1",
         type: "1",
         addedBy: "Quách Ngọc Hưng",
+        coordinates: Sequelize.fn('ST_GeomFromText', `POINT(9.890507 105.873462)`, 4326),
+        createdAt: "2025-03-11 04:08:10.000",
+        updatedAt: "2025-03-11 04:08:10.000"
+      },
+      {
+        deviceName: "DV004",
+        serialNumber: "000000004",
+        status: "1",
+        type: "1",
+        addedBy: "Quách Ngọc Hưng",
+        coordinates: Sequelize.fn('ST_GeomFromText', `POINT(9.884242 105.890140)`, 4326),
         createdAt: "2025-03-11 04:08:10.000",
         updatedAt: "2025-03-11 04:08:10.000"
       }

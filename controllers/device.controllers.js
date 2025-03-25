@@ -4,7 +4,6 @@ const { Device } = require('../models');
 const createDevice = async (req, res) => {
   try {
     const { deviceName, serialNumber, status, type, coordinates, addedBy } = req.body;
-    console.log(coordinates);
     const newDevice = await Device.create({
       deviceName,
       serialNumber,
@@ -46,18 +45,30 @@ const getAllDevices = async (req, res) => {
 }
 
 const getAllDevicesPage = async (req, res) => {
+  const { deviceName } = req.query;
   try {
-    const deviceList = await Device.findAll();
-    // res.status(200).send(deviceList);
-    res.status(200).render("device/device", {
-      deviceList,
-      deviceListLength: deviceList.length > 0,
-      pageTitle: "Device Manager",
-      activeClass: "Home",
-      activeFormCss: false,
-      alert: false,
-      path: "/device",
-    });
+    if (deviceName) {
+      const deviceList = await Device.finAll({
+        where: {
+          deviceName: {
+            [Op.iLike]: `%${deviceName}%`
+          }
+        }
+      });
+      res.status(200).send(deviceList);
+    } else {
+      const deviceList = await Device.findAll();
+      // res.status(200).send(deviceList);
+      res.status(200).render("device/device", {
+        deviceList,
+        deviceListLength: deviceList.length > 0,
+        pageTitle: "Device Manager",
+        activeClass: "Home",
+        activeFormCss: false,
+        alert: false,
+        path: "/device",
+      });
+    }
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -80,7 +91,6 @@ const getDetailDevice = async (req, res) => {
 const updateDevice = async (req, res) => {
   const { id } = req.params;
   const data = req.body;
-  console.log(data);
   try {
     await Device.update(
       {
@@ -88,6 +98,10 @@ const updateDevice = async (req, res) => {
         serialNumber: data.serialNumber,
         status: data.status,
         type: data.type,
+        coordinates: {
+          type: 'Point',
+          coordinates: data.coordinates,
+        },
         addedBy: data.addedBy,
       },
       {

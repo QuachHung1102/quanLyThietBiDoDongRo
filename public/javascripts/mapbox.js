@@ -34,7 +34,7 @@ const map = new mapboxgl.Map({
   container: 'map',
   style: 'mapbox://styles/mapbox/streets-v12',
   projection: 'globe', // Display the map as a globe, since satellite-v9 defaults to Mercator
-  zoom: 18, // starting zoom
+  zoom: 13, // starting zoom
   // pitch: 45, // starting pitch (tilt) in degrees
   center: coordinates, // starting position [lng, lat]
   // bearing: -60, // bearing in degrees (clockwise) 

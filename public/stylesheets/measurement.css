@@ -17,9 +17,10 @@
 }
 
 .measurement-container {
-  height: 80vh;
+  height: 85vh;
   overflow-y: scroll;
   scrollbar-width: none;
+  margin-block: 1rem;
 }
 
 .measurement__content {

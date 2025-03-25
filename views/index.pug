@@ -2,7 +2,38 @@ extends ./layouts/layout.pug
 
 block styles
   link(rel="stylesheet" href="public/stylesheets/style.css")
+  link(rel="stylesheet" href="public/stylesheets/home.css")
 
 block content
+  .home-container
+    .hero-section
+      img.logo(src="/public/images/logo1.png" alt="Organization Logo")
+      h1 Welcome to the National Electrical Leakage Monitoring System
+      p Providing real-time monitoring and management of electrical leakage devices.
+    .content-section
+      .announcements
+        h2 Announcements
+        ul
+          li Announcement 1: System maintenance scheduled for 10th October.
+          li Announcement 2: New features added to the monitoring dashboard.
+          li Announcement 3: Please update your device firmware.
+      .articles
+        h2 Latest Articles
+        .article
+          img.article-image(src="/public/images/article1.jpg" alt="Article 1")
+          h3 Article Title 1
+          p Brief description of the article. 
+          a(href="#") Read more
+        .article
+          img.article-image(src="/public/images/article2.jpg" alt="Article 2")
+          h3 Article Title 2
+          p Brief description of the article.
+          a(href="#") Read more
+        .article
+          img.article-image(src="/public/images/article3.jpg" alt="Article 3")
+          h3 Article Title 3
+          p Brief description of the article.
+          a(href="#") Read more
 
 block scripts
+  script(src="/public/javascripts/home.js")

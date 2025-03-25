@@ -3,37 +3,78 @@ extends ./layouts/layout.pug
 block styles
   link(rel="stylesheet" href="public/stylesheets/style.css")
   link(rel="stylesheet" href="public/stylesheets/home.css")
+  link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css")
 
 block content
   .home-container
     .hero-section
-      img.logo(src="/public/images/logo1.png" alt="Organization Logo")
-      h1 Welcome to the National Electrical Leakage Monitoring System
-      p Providing real-time monitoring and management of electrical leakage devices.
+      .logo-container
+        img.logo(src="/public/images/logo-evn.png" alt="EVN Logo")
+        .logo-text
+          h1 Tổng Công Ty Điện Lực Việt Nam
+          p Hệ Thống Giám Sát Dòng Rò Điện Quốc Gia
+      .hero-description
+        p Hệ thống giám sát và quản lý thông minh các thiết bị đo dòng rò điện, đảm bảo an toàn và hiệu quả trong việc cung cấp điện.
+
     .content-section
       .announcements
-        h2 Announcements
+        h2
+          i.fas.fa-bullhorn
+          span Thông Báo Mới
         ul
-          li Announcement 1: System maintenance scheduled for 10th October.
-          li Announcement 2: New features added to the monitoring dashboard.
-          li Announcement 3: Please update your device firmware.
+          li
+            .announcement-date 15/03/2024
+            .announcement-content Kế hoạch bảo trì hệ thống giám sát vào ngày 20/03/2024
+          li
+            .announcement-date 10/03/2024
+            .announcement-content Cập nhật phiên bản mới của phần mềm giám sát
+          li
+            .announcement-date 05/03/2024
+            .announcement-content Thông báo về việc triển khai thiết bị đo mới tại các trạm biến áp
+
       .articles
-        h2 Latest Articles
+        h2
+          i.fas.fa-newspaper
+          span Bài Viết Mới
         .article
-          img.article-image(src="/public/images/article1.jpg" alt="Article 1")
-          h3 Article Title 1
-          p Brief description of the article. 
-          a(href="#") Read more
+          img.article-image(src="/public/images/antoandien.jpg" alt="An toàn điện")
+          .article-content
+            h3 An Toàn Điện: Những Điều Cần Biết
+            p Hướng dẫn chi tiết về các biện pháp an toàn khi làm việc với điện và cách phòng tránh sự cố.
+            a(href="#") Đọc thêm
+              i.fas.fa-arrow-right
         .article
-          img.article-image(src="/public/images/article2.jpg" alt="Article 2")
-          h3 Article Title 2
-          p Brief description of the article.
-          a(href="#") Read more
+          img.article-image(src="/public/images/antoandien.jpg" alt="Công nghệ mới")
+          .article-content
+            h3 Công Nghệ Đo Dòng Rò Mới
+            p Giới thiệu về thiết bị đo dòng rò thế hệ mới với độ chính xác cao và khả năng kết nối thông minh.
+            a(href="#") Đọc thêm
+              i.fas.fa-arrow-right
         .article
-          img.article-image(src="/public/images/article3.jpg" alt="Article 3")
-          h3 Article Title 3
-          p Brief description of the article.
-          a(href="#") Read more
+          img.article-image(src="/public/images/antoandien.jpg" alt="Bảo trì")
+          .article-content
+            h3 Quy Trình Bảo Trì Thiết Bị
+            p Hướng dẫn chi tiết về quy trình bảo trì và kiểm tra định kỳ các thiết bị đo dòng rò.
+            a(href="#") Đọc thêm
+              i.fas.fa-arrow-right
+
+    .quick-stats
+      .stat-item
+        i.fas.fa-bolt
+        .stat-number 1500+
+        .stat-label Thiết Bị Đang Hoạt Động
+      .stat-item
+        i.fas.fa-shield-alt
+        .stat-number 99.9%
+        .stat-label Độ Chính Xác
+      .stat-item
+        i.fas.fa-map-marker-alt
+        .stat-number 63
+        .stat-label Tỉnh/Thành Phố
+      .stat-item
+        i.fas.fa-clock
+        .stat-number 24/7
+        .stat-label Giám Sát Liên Tục
 
 block scripts
   script(src="/public/javascripts/home.js")

@@ -62,10 +62,15 @@ const chart1 = new Chart(chartDoom1, {
           // 'rgba(255, 159, 64, 1)'      // Màu cam
         ],
         borderWidth: 1,
+        tension: 0.4, // Add tension for curved lines
       }
     ]
   },
   options: {
+    animation: {
+      duration: 1000, // Animation duration in milliseconds
+      easing: 'easeInOutQuad', // Easing function for smooth transitions
+    },
     scales: {
       x: {},
       y: {
@@ -101,9 +106,14 @@ const chart2 = new Chart(chartDoom2, {
           // 'rgba(255, 159, 64, 1)'      // Màu cam
         ],
         borderWidth: 1,
+        tension: 0.4, // Add tension for curved lines
       }]
   },
   options: {
+    animation: {
+      duration: 1000,
+      easing: 'easeInOutQuad',
+    },
     scales: {
       x: {},
       y: {
@@ -139,9 +149,14 @@ const chart3 = new Chart(chartDoom3, {
           // 'rgba(255, 159, 64, 1)'      // Màu cam
         ],
         borderWidth: 1,
+        tension: 0.4, // Add tension for curved lines
       }]
   },
   options: {
+    animation: {
+      duration: 1000,
+      easing: 'easeInOutQuad',
+    },
     scales: {
       x: {},
       y: {
@@ -177,9 +192,14 @@ const chart4 = new Chart(chartDoom4, {
           // 'rgba(255, 159, 64, 1)'      // Màu cam
         ],
         borderWidth: 1,
+        tension: 0.4, // Add tension for curved lines
       }]
   },
   options: {
+    animation: {
+      duration: 1000,
+      easing: 'easeInOutQuad',
+    },
     scales: {
       x: {},
       y: {
@@ -232,9 +252,13 @@ function updateChart(chart, measurement, key) {
 }
 
 function updateDeviceInfo(measurement) {
+  const minVoltage = 10;
+  const maxVoltage = 12;
+  const batteryPercent = Math.max(0, Math.min(100, ((measurement.batteryLevel - minVoltage) / (maxVoltage - minVoltage)) * 100));
+
   if (currentBatteryLevel !== measurement.batteryLevel) {
-    document.getElementById('battery').value = measurement.batteryLevel;
-    document.getElementById('batteryPercent').textContent = `${measurement.batteryLevel}%`;
+    document.getElementById('battery').value = batteryPercent; // Cập nhật giá trị thanh pin
+    document.getElementById('batteryPercent').textContent = `${Math.round(batteryPercent)}%`; // Hiển thị phần trăm pin
     currentBatteryLevel = measurement.batteryLevel;
   }
 }

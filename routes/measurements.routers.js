@@ -1,6 +1,6 @@
 const express = require('express');
 const measurementRouter = express.Router();
-const { Measurement } = require('../models');
+const { Measurement, Device } = require('../models');
 
 // controllers
 const {
@@ -19,7 +19,7 @@ const type = ['admin', 'superadmin'];
 
 measurementRouter.post('/', createMeasurement);
 measurementRouter.get('/all', getAllMeasurements);
-measurementRouter.get('/page/:deviceId', checkDeviceExist(Measurement), getMeasurementsPageByID);
+measurementRouter.get('/page/:deviceId', checkDeviceExist(Device), getMeasurementsPageByID);
 measurementRouter.get('/:deviceId', getMeasurementsByID);
 
 module.exports = { measurementRouter };

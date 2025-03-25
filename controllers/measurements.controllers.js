@@ -57,7 +57,7 @@ const getMeasurementsByID = async (req, res) => {
     if (measurementList.length) {
       res.status(200).json(measurementList);
     } else {
-      res.status(404).json({ error: 'Device not found' });
+      res.status(404).json({ error: 'Device no have measurements' });
     }
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -89,7 +89,7 @@ const getMeasurementsPageByID = async (req, res) => {
         path: '/measurement',
       });
     } else {
-      res.status(404).render('error', { error: 'Device not found' });
+      res.status(404).send('Device no have measurements');
     }
   } catch (error) {
     res.status(500).render('error', { error });

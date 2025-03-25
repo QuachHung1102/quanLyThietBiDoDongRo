@@ -1,5 +1,7 @@
 mapboxgl.accessToken = "pk.eyJ1IjoicXVhY2huZ29jaHVuZyIsImEiOiJjbThmcWpuNW4wYXRkMmpzamp4NDl0aHFhIn0.y084N37bvwPq3FlTw5aY5A";
 
+const coordinates = deviceData.coordinates.coordinates;
+
 const geojson = {
   type: 'FeatureCollection',
   features: [
@@ -7,7 +9,7 @@ const geojson = {
       type: 'Feature',
       geometry: {
         type: 'Point',
-        coordinates: [-77.032, 38.913],
+        coordinates: coordinates,
       },
       properties: {
         title: 'Device',
@@ -34,7 +36,7 @@ const map = new mapboxgl.Map({
   projection: 'globe', // Display the map as a globe, since satellite-v9 defaults to Mercator
   zoom: 18, // starting zoom
   // pitch: 45, // starting pitch (tilt) in degrees
-  center: [-77.032, 38.913], // starting position [lng, lat]
+  center: coordinates, // starting position [lng, lat]
   // bearing: -60, // bearing in degrees (clockwise) 
 });
 

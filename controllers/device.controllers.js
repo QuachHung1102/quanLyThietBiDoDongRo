@@ -3,8 +3,19 @@ const { Device } = require('../models');
 
 const createDevice = async (req, res) => {
   try {
-    const { deviceName, serialNumber, status, type, addedBy } = req.body;
-    const newDevice = await Device.create({ deviceName, serialNumber, status, type, addedBy });
+    const { deviceName, serialNumber, status, type, coordinates, addedBy } = req.body;
+    console.log(coordinates);
+    const newDevice = await Device.create({
+      deviceName,
+      serialNumber,
+      status,
+      type,
+      coordinates: {
+        type: 'Point',
+        coordinates: coordinates,
+      },
+      addedBy
+    });
     res.status(201).json(newDevice);
   } catch (error) {
     console.log(error);
@@ -35,30 +46,18 @@ const getAllDevices = async (req, res) => {
 }
 
 const getAllDevicesPage = async (req, res) => {
-  const { deviceName } = req.query;
   try {
-    if (deviceName) {
-      const deviceList = await Device.finAll({
-        where: {
-          deviceName: {
-            [Op.iLike]: `%${deviceName}%`
-          }
-        }
-      });
-      res.status(200).send(deviceList);
-    } else {
-      const deviceList = await Device.findAll();
-      // res.status(200).send(deviceList);
-      res.status(200).render("device/device", {
-        deviceList,
-        deviceListLength: deviceList.length > 0,
-        pageTitle: "Device Manager",
-        activeClass: "Home",
-        activeFormCss: false,
-        alert: false,
-        path: "/device",
-      });
-    }
+    const deviceList = await Device.findAll();
+    // res.status(200).send(deviceList);
+    res.status(200).render("device/device", {
+      deviceList,
+      deviceListLength: deviceList.length > 0,
+      pageTitle: "Device Manager",
+      activeClass: "Home",
+      activeFormCss: false,
+      alert: false,
+      path: "/device",
+    });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

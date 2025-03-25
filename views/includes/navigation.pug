@@ -3,26 +3,21 @@ nav.navbar.navbar-expand-lg.bg-body-tertiary
     a.navbar-brand(href="#") Device Management
     div
       ul.navbar-nav.me-auto.mb-2.mb-lg-0
-        li.nav-item.hidden
-          a.nav-link(href="/admin") Admin Panel
-        li.nav-item.dropdown
-          a.nav-link.dropdown-toggle(href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false") Dropdown
+        li.nav-item#adminPanel.hidden
+          a.nav-link(href="#") Admin Panel
+        li.nav-item.dropdown#userDropdown.hidden
+          a.nav-link.dropdown-toggle(href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false")
+            img(src="/public/images/Sample_User_Icon.png" alt="User" class="user-icon" width="26" height="26")
           ul.dropdown-menu
             li
               a.dropdown-item(href="#") Account
             li
               hr.dropdown-divider
             li
-              p.dropdown-item User Name
+              a.dropdown-item(href="#").username quachngochung
             li
               a.dropdown-item(href="#") Logout
-
-script.
-  let user;
-  let token;
-
-  // get user in localStorage
-  if (typeof Storage !== 'undefined') {
-    user = JSON.parse(localStorage.getItem('user'));
-    token = JSON.parse(localStorage.getItem('token'));
-  }
+        li.nav-item.nav-auth
+          a.nav-link(href="/users/login-page") Login
+        li.nav-item.nav-auth
+          a.nav-link(href="/users/register-page") Register

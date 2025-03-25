@@ -96,7 +96,7 @@ const login = async (req, res) => {
             token: token,
             user: {
               type: user.type,
-              name: user.firstName + user.lastName,
+              name: `${user.firstName} ${user.lastName}`,
               avatar: user.avatar,
             }
           }

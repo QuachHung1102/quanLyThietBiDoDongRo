@@ -2,6 +2,7 @@
 const {
   Model
 } = require('sequelize');
+const { Sequelize } = require('.');
 module.exports = (sequelize, DataTypes) => {
   class Device extends Model {
     /**
@@ -55,6 +56,17 @@ module.exports = (sequelize, DataTypes) => {
     type: {
       type: DataTypes.STRING,
       allowNull: false,
+    },
+    coordinates: {
+      type: DataTypes.GEOMETRY('POINT', 4326),
+      allowNull: false,
+      validate: {
+        isPoint(value) {
+          if (!value || value.type !== 'Point') {
+            throw new Error('Coordinates phải là kiểu POINT geometry');
+          }
+        }
+      },
     },
     addedBy: {
       type: DataTypes.STRING,

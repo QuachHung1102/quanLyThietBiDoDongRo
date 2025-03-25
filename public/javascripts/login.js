@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
         // Chuyển hướng đến trang khác
-        // window.location.href = '/measurements/page';
+        window.location.href = '/devices/page';
       } else {
         alert('Login failed. Please check your credentials.');
       }

@@ -1,3 +1,3 @@
-const socket = io('http://localhost:3000', {
+const socket = io({
   withCredentials: true, // Gửi cookie kèm theo
 });

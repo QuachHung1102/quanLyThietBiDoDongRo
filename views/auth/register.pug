@@ -12,10 +12,13 @@ block navbar
 block content
   .auth-container
     h2 Register
-    form(id="loginForm")
+    form(id="registerForm")
       .form-group
-        label(for="name") Name:
-        input#name(type="text" name="name" required)
+        label(for="firstName") First Name:
+        input#firstName(type="text" name="firstName" required)
+      .form-group
+        label(for="lastName") Last Name:
+        input#lastName(type="text" name="lastName" required)
       .form-group
         label(for="email") Email:
         input#email(type="email" name="email" required)

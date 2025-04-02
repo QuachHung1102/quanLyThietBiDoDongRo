@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", () => {
-  console.log("Home page loaded");
   // Example: Highlight announcements on hover
   const announcements = document.querySelectorAll(".announcements ul li");
   announcements.forEach((item) => {

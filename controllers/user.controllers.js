@@ -87,8 +87,10 @@ const login = async (req, res) => {
         res.cookie('jwt', token, {
           httpOnly: true, // Bảo mật: ngăn JavaScript truy cập cookie
           secure: process.env.NODE_ENV === 'production', // Chỉ gửi qua HTTPS trong production
+          // secure: false,
           sameSite: 'strict', // Ngăn chặn CSRF
-          maxAge: 24 * 60 * 60 * 1000 // Thời gian sống của cookie (1 ngày)
+          maxAge: 24 * 60 * 60 * 1000, // Thời gian sống của cookie (1 ngày)
+          // domain: '.quanlydongroptc4.com',
         })
         res.status(200).json(
           {

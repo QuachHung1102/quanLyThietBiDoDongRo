@@ -81,7 +81,7 @@ const getMeasurementsPageByID = async (req, res) => {
     })
     if (measurementList.length) {
       res.status(200).render('measurement/measurement', {
-        measurementList,
+        measurementList: measurementList.reverse(),
         device,
         pageTitle: 'Measurement Manager',
         activeClass: 'Measurement',

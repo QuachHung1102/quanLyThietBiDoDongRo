@@ -27,5 +27,8 @@ userRouter.get('/', authenticate, authorize(type), getAllUsers);
 userRouter.get('/all-trip', authenticate, getAllTripUser);
 userRouter.put('/:id', authenticate, authorize(type), updateUser);
 userRouter.delete('/:id', authenticate, authorize(type), deleteUser);
+userRouter.post('/authenticate', authenticate, () => {
+  res.status(200).send({ message: 'Authenticated' });
+})
 
 module.exports = { userRouter };

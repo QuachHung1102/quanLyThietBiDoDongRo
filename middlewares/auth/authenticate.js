@@ -13,7 +13,8 @@ const authenticate = (req, res, next) => {
             res.status(401).redirect('/users/login-page');
         }
     } catch (error) {
-        res.status(500).send(error);
+        console.error('Token verification failed:', error.message);
+        res.status(500).redirect('/users/login-page');
     }
 }
 

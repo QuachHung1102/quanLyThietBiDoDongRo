@@ -10,7 +10,7 @@ block content
       ul.device__item-list
         each element in deviceList
           li.device__item(class=(alert ? 'alert' : 'normal'))
-            a(href=`/measurements/page/${element.id}`)
+            a(href=`/meansurements/page/${element.id}`)
               h3.device__name #{element.deviceName}
               h4.device__id Device ID: #{element.id}
               p.device__type Type: #{element.type}

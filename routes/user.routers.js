@@ -13,6 +13,12 @@ const {
   getAllTripUser,
 } = require('../controllers/user.controllers');
 // middlewares
+const {
+  checkExist,
+  checkDeviceExist,
+  checkMailExist,
+  checkPhoneNumberExist,
+} = require('../middlewares/validations/checkExist');
 const { authenticate } = require('../middlewares/auth/authenticate');
 const { authorize } = require('../middlewares/auth/authorize');
 const type = ['admin', 'superadmin'];
@@ -27,8 +33,10 @@ userRouter.get('/', authenticate, authorize(type), getAllUsers);
 userRouter.get('/all-trip', authenticate, getAllTripUser);
 userRouter.put('/:id', authenticate, authorize(type), updateUser);
 userRouter.delete('/:id', authenticate, authorize(type), deleteUser);
-userRouter.post('/authenticate', authenticate, () => {
-  res.status(200).send({ message: 'Authenticated' });
+userRouter.post('/authenticate', authenticate, (req, res) => {
+  if (req.user !== 'Token verification failed: jwt expired') {
+    res.status(200).send({ message: 'Authenticated' });
+  }
 })
 
 module.exports = { userRouter };

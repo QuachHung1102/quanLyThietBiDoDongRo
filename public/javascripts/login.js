@@ -1,5 +1,3 @@
-import { saveDynamicDataToFile } from './saveFile.js';
-
 document.addEventListener('DOMContentLoaded', function () {
   const form = document.getElementById('loginForm');
   form.addEventListener('submit', async function (event) {
@@ -15,15 +13,12 @@ document.addEventListener('DOMContentLoaded', function () {
       if (response.data.token) {
         alert('Login successful!');
         // Lưu token vào localStorage
-        localStorage.setItem('token', JSON.stringify(response.data.token));
+        localStorage.setItem('token', response.data.token);
         localStorage.setItem('user', JSON.stringify(response.data.user));
-        console.log(`Save data to file successfully!`);
-        console.log(localStorage.getItem('user'));
-        console.log(localStorage.getItem('token'));
+        console.log('Save data to localStorage successfully!');
 
-
-        // Chuyển hướng đến trang khác
-        window.location.href = '/devices/page';
+        // Chuyển hướng đến trang home
+        window.location.href = '/';
       } else {
         alert('Login failed. Please check your credentials.');
       }

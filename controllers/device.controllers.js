@@ -63,7 +63,7 @@ const getAllDevicesPage = async (req, res) => {
         deviceList,
         deviceListLength: deviceList.length > 0,
         pageTitle: "Device Manager",
-        activeClass: "Home",
+        activeClass: "Device Page",
         activeFormCss: false,
         alert: false,
         path: "/device",

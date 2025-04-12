@@ -229,6 +229,10 @@ socket.on('disconnect', (reason) => {
 });
 
 socket.on('newMeasurement', (measurement) => {
+  if (!measurement) {
+    console.error('No measurement data received');
+    return;
+  }
   updateChart(chart1, measurement, 'leakageCurrent');
   updateChart(chart2, measurement, 'temperature');
   updateChart(chart3, measurement, 'humidity');

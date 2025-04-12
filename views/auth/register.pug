@@ -13,15 +13,21 @@ block content
   .auth-container
     h2 Register
     form(id="registerForm")
-      .form-group
-        label(for="firstName") First Name:
-        input#firstName(type="text" name="firstName" required)
-      .form-group
-        label(for="lastName") Last Name:
-        input#lastName(type="text" name="lastName" required)
+      .row 
+        .col-6.col-md-6.col-sm-12
+          .form-group
+            label(for="firstName") First Name:
+            input#firstName(type="text" name="firstName" required)
+        .col-6.col-md-6.col-sm-12
+          .form-group
+            label(for="lastName") Last Name:
+            input#lastName(type="text" name="lastName" required)
       .form-group
         label(for="email") Email:
         input#email(type="email" name="email" required)
+      .form-group
+        label(for="phoneNumber") Phone Number:
+        input#phoneNumber(type="tel" name="phoneNumber" required)
       .form-group
         label(for="password") Password:
         input#password(type="password" name="password" required)

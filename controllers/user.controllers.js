@@ -97,6 +97,8 @@ const login = async (req, res) => {
             message: "Password Correct",
             token: token,
             user: {
+              id: user.id,
+              email: user.email,
               type: user.type,
               name: `${user.firstName} ${user.lastName}`,
               avatar: user.avatar,

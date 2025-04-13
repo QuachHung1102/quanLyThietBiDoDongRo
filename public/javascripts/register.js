@@ -100,7 +100,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (response.status == 200) {
         alert('Registration successful!');
         // Lưu token vào localStorage
-        localStorage.setItem('token', JSON.stringify(response.data.token));
+        localStorage.setItem('token', response.data.token);
         localStorage.setItem('user', JSON.stringify(response.data.user));
         console.log(`Save data to file successfully!`);
         window.location.href = '/users/login-page';

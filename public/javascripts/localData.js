@@ -5,8 +5,10 @@ let token;
 
 // Lấy thông tin từ localStorage
 if (typeof Storage !== 'undefined') {
-  user = JSON.parse(localStorage.getItem('user'));
-  token = localStorage.getItem('token');
+  if (!!localStorage.getItem('user') && !!localStorage.getItem('token')) {
+    user = JSON.parse(localStorage.getItem('user'));
+    token = localStorage.getItem('token');
+  }
 }
 
 const currentPage = window.location.pathname.split('/').pop();

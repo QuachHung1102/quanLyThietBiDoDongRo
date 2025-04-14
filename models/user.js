@@ -25,7 +25,7 @@ module.exports = (sequelize, DataTypes) => {
           msg: 'Please enter the first name',
         },
         notEmpty: true,
-        len: [5, 100],
+        len: [1, 50],
       }
     },
     lastName: {
@@ -36,7 +36,7 @@ module.exports = (sequelize, DataTypes) => {
           msg: 'Please enter the last name',
         },
         notEmpty: true,
-        len: [5, 100],
+        len: [1, 50],
       }
     },
     email: {
@@ -51,6 +51,7 @@ module.exports = (sequelize, DataTypes) => {
           msg: 'Please enter the email',
         },
         notEmpty: true,
+        len: [5, 100],
       }
     },
     phoneNumber: {
@@ -65,6 +66,7 @@ module.exports = (sequelize, DataTypes) => {
           msg: 'Please enter the phone number',
         },
         notEmpty: true,
+        len: [10, 15],
       }
     },
     password: {
@@ -75,6 +77,7 @@ module.exports = (sequelize, DataTypes) => {
           msg: 'Please enter the password',
         },
         notEmpty: true,
+        len: [6, 100],
       }
     },
     avatar: DataTypes.STRING,

@@ -57,6 +57,7 @@ const register = async (req, res) => {
     });
     res.status(201).send(newUser);
   } catch (error) {
+    console.log(error);
     res.status(500).send(error);
   }
 };
@@ -213,6 +214,32 @@ const uploadAvatar = async (req, res) => {
   }
 };
 
+const checkEmail = async function (req, res) {
+  const matchEmail = req.body.email;
+  try {
+    const user = await User.findOne({
+      where: { email: matchEmail },
+    });
+    res.status(200).send({ exists: !!user });
+  } catch (error) {
+    console.error('Error during email check:', error.message);
+    res.status(500).send({ message: 'Internal server error', error: error.message });
+  }
+};
+
+const checkPhone = async function (req, res) {
+  const matchPhone = req.body.phoneNumber;
+  try {
+    const user = await User.findOne({
+      where: { phoneNumber: matchPhone },
+    });
+    res.status(200).send({ exists: !!user });
+  } catch (error) {
+    console.error('Error during phone number check:', error.message);
+    res.status(500).send({ message: 'Internal server error', error: error.message });
+  }
+};
+
 module.exports = {
   getRegisterPage,
   register,
@@ -223,4 +250,6 @@ module.exports = {
   deleteUser,
   uploadAvatar,
   getAllTripUser,
+  checkEmail,
+  checkPhone,
 };

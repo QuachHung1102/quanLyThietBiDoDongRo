@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
     // Kiểm tra xem mật khẩu và xác nhận mật khẩu có giống nhau không
-    if (conditions.password !== confirmPassword) {
+    if (password !== confirmPassword) {
       alert('Passwords do not match!');
       return;
     }
@@ -70,9 +70,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     // Kiểm tra xem email đã tồn tại chưa
     try {
-      const response = await axios.post('/users/check-email', { email });
-      if (response.data.exists) {
-        alert('Email already exists!');
+      const emailResponse = await axios.post('/users/check-email', { email });
+      if (emailResponse.data.exists) {
+        alert('Email already exists. Please use a different email.');
         return;
       }
     } catch (error) {
@@ -80,11 +80,12 @@ document.addEventListener('DOMContentLoaded', () => {
       alert('An error occurred while checking email. Please try again later.');
       return;
     }
+
     // Kiểm tra xem số điện thoại đã tồn tại chưa
     try {
-      const response = await axios.post('/users/check-phone', { phoneNumber });
-      if (response.data.exists) {
-        alert('Phone number already exists!');
+      const phoneResponse = await axios.post('/users/check-phone', { phoneNumber });
+      if (phoneResponse.data.exists) {
+        alert('Phone number already exists. Please use a different phone number.');
         return;
       }
     } catch (error) {
@@ -95,19 +96,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Gửi yêu cầu đăng ký
     try {
-      const response = await axios.post('/users/register', { firstName, lastName, email, password, phoneNumber });
+      const response = await axios.post('/users/register', { firstName, lastName, email, phoneNumber, password });
 
-      if (response.status == 200) {
+      if (response.status === 201) {
         alert('Registration successful!');
         // Lưu token vào localStorage
-        localStorage.setItem('token', response.data.token);
-        localStorage.setItem('user', JSON.stringify(response.data.user));
-        console.log(`Save data to file successfully!`);
         window.location.href = '/users/login-page';
       }
     } catch (error) {
       console.error('Error during registration:', error.response ? error.response.data : error.message);
-      window.alert('An error occurred. Please try again later.');
+      alert('An error occurred during registration. Please try again later.');
     }
-  })
+  });
 });

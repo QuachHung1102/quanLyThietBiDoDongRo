@@ -11,13 +11,13 @@ const {
   deleteUser,
   uploadAvatar,
   getAllTripUser,
+  checkEmail,
+  checkPhone,
 } = require('../controllers/user.controllers');
 // middlewares
 const {
   checkExist,
   checkDeviceExist,
-  checkMailExist,
-  checkPhoneNumberExist,
 } = require('../middlewares/validations/checkExist');
 const { authenticate } = require('../middlewares/auth/authenticate');
 const { authorize } = require('../middlewares/auth/authorize');
@@ -38,5 +38,7 @@ userRouter.post('/authenticate', authenticate, (req, res) => {
     res.status(200).send({ message: 'Authenticated' });
   }
 })
+userRouter.post('/check-email', checkEmail);
+userRouter.post('/check-phone', checkPhone);
 
 module.exports = { userRouter };

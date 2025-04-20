@@ -8,6 +8,8 @@ const {
   getAllMeasurements,
   getMeasurementsByID,
   getMeasurementsPageByID,
+  getSearchHistoryPage,
+  getMeasurementsByIDAndTime,
   // updateMeasurement,
   // deleteMeasurement,
 } = require('../controllers/measurements.controllers');
@@ -20,6 +22,8 @@ const type = ['admin', 'superadmin'];
 measurementRouter.post('/', createMeasurement);
 measurementRouter.get('/all', getAllMeasurements);
 measurementRouter.get('/page/:deviceId', checkDeviceExist(Device), getMeasurementsPageByID);
+measurementRouter.get('/search-history', getSearchHistoryPage);
+measurementRouter.get('/getHistory', getMeasurementsByIDAndTime);
 measurementRouter.get('/:deviceId', getMeasurementsByID);
 
 module.exports = { measurementRouter };

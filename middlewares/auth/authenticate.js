@@ -5,7 +5,7 @@ const { User } = require('../../models/index'); // Import model User
 const authenticate = async (req, res, next) => {
     const token = req.header("token");
     if (!token) {
-        return res.status(401).send({ message: "Token is missing. Please log in." });
+        return res.status(401).redirect('../../users/login-page'); // Chuyển hướng đến trang đăng nhập nếu không có token
     }
     try {
         const decode = jwt.verify(token, secretOrPrivateKey);

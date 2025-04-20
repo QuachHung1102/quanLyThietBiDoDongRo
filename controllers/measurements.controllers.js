@@ -87,6 +87,7 @@ const getMeasurementsPageByID = async (req, res) => {
         activeClass: 'Measurement',
         activeFormCss: false,
         path: '/measurement',
+        mapboxToken: process.env.MAPBOX_API_KEY,
       });
     } else {
       res.status(404).send('Device no have measurements');
@@ -94,12 +95,54 @@ const getMeasurementsPageByID = async (req, res) => {
   } catch (error) {
     res.status(500).render('error', { error });
   }
-
 };
+
+const getSearchHistoryPage = async (req, res) => {
+  try {
+    const deviceList = await Device.findAll();
+    res.status(200).render('search/searchData', {
+      deviceList,
+      deviceListLength: deviceList.length > 0,
+      pageTitle: 'Search History',
+      activeClass: 'Search',
+      activeFormCss: true,
+      path: '/searchHistory',
+      mapboxToken: process.env.MAPBOX_API_KEY,
+    });
+  } catch (error) {
+    res.status(500).render('error', { error });
+  }
+}
+
+// API lấy lịch sử đo của thiết bị theo bộ lọc thời gian
+const getMeasurementsByIDAndTime = async (req, res) => {
+  const { deviceId } = req.params;
+  const { startDate, endDate } = req.query;
+  try {
+    const measurementList = await Measurement.findAll({
+      where: {
+        deviceId,
+        measuredAt: {
+          [Op.between]: [new Date(startDate), new Date(endDate)]
+        }
+      }
+    });
+    if (measurementList.length) {
+      res.status(200).json(measurementList);
+    } else {
+      res.status(404).json({ error: 'Device no have measurements' });
+    }
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+
+}
 
 module.exports = {
   createMeasurement,
   getAllMeasurements,
   getMeasurementsByID,
   getMeasurementsPageByID,
+  getSearchHistoryPage,
+  getMeasurementsByIDAndTime,
 };

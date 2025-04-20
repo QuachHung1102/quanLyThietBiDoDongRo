@@ -44,6 +44,9 @@ block scripts
   script.
     const measurementData = !{JSON.stringify(measurementList)};
     const deviceData = !{JSON.stringify(device)};
+    const mapboxAccessToken = !{JSON.stringify(mapboxToken)};
+
+
   script(src="https://cdn.jsdelivr.net/npm/chart.js")
   script(src="https://api.mapbox.com/mapbox-gl-js/v3.10.0/mapbox-gl.js")
   script(src="https://cdn.socket.io/4.8.1/socket.io.min.js")

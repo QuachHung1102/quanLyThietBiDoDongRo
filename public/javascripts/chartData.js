@@ -215,30 +215,32 @@ const chart4 = new Chart(chartDoom4, {
 })();
 
 // Tham gia theo dõi thiết bị
-socket.on('connect', () => {
-  console.log(`Connected to socket server`);
-  socket.emit('joinDevice', deviceData.id);
-})
+if (!window.location.pathname.split('/').pop() === 'search-history') {
+  socket.on('connect', () => {
+    console.log(`Connected to socket server`);
+    socket.emit('joinDevice', deviceData.id);
+  })
 
-socket.on('connect_error', (err) => {
-  console.log('Connection error:', err.message);
-});
+  socket.on('connect_error', (err) => {
+    console.log('Connection error:', err.message);
+  });
 
-socket.on('disconnect', (reason) => {
-  console.log('Disconnected:', reason);
-});
+  socket.on('disconnect', (reason) => {
+    console.log('Disconnected:', reason);
+  });
 
-socket.on('newMeasurement', (measurement) => {
-  if (!measurement) {
-    console.error('No measurement data received');
-    return;
-  }
-  updateChart(chart1, measurement, 'leakageCurrent');
-  updateChart(chart2, measurement, 'temperature');
-  updateChart(chart3, measurement, 'humidity');
-  updateChart(chart4, measurement, 'powerLoss');
-  updateDeviceInfo(measurement);
-});
+  socket.on('newMeasurement', (measurement) => {
+    if (!measurement) {
+      console.error('No measurement data received');
+      return;
+    }
+    updateChart(chart1, measurement, 'leakageCurrent');
+    updateChart(chart2, measurement, 'temperature');
+    updateChart(chart3, measurement, 'humidity');
+    updateChart(chart4, measurement, 'powerLoss');
+    updateDeviceInfo(measurement);
+  });
+}
 
 function updateChart(chart, measurement, key) {
   const dateUpdate = new Date(measurement.measuredAt);

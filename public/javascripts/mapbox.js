@@ -1,6 +1,9 @@
-mapboxgl.accessToken = "pk.eyJ1IjoicXVhY2huZ29jaHVuZyIsImEiOiJjbThmcWpuNW4wYXRkMmpzamp4NDl0aHFhIn0.y084N37bvwPq3FlTw5aY5A";
+mapboxgl.accessToken = mapboxAccessToken;
 
-const coordinates = deviceData.coordinates.coordinates;
+let coordinates = [105.849998, 21.033333];
+if (deviceData) {
+  coordinates = deviceData.coordinates.coordinates;
+}
 
 const geojson = {
   type: 'FeatureCollection',
@@ -12,8 +15,8 @@ const geojson = {
         coordinates: coordinates,
       },
       properties: {
-        title: 'Device',
-        description: 'Washington, D.C.'
+        title: deviceData ? deviceData.deviceName : [0, 0],
+        description: coordinates,
       }
     },
     // {
@@ -59,8 +62,8 @@ for (const feature of geojson.features) {
       new mapboxgl.Popup({ offset: 25 }) // add popups
         .setHTML(
           `
-            <h3>${feature.properties.title}</h3>
-            <p>${feature.geometry.coordinates}</p>
+            <h3>${feature.properties.title || ''}</h3>
+            <p>${feature.geometry.coordinates || ''}</p>
           `
         )
     )

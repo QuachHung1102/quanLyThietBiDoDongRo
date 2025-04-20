@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "start": "node --env-file=.env ./bin/www",
-    "dev": "nodemon --env-file=.env ./bin/www"
+    "dev": "nodemon --env-file=.env ./bin/www",
+    "pm2-start": "pm2 start ./bin/www"
   },
   "dependencies": {
     "bad-words": "^4.0.0",

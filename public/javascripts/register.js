@@ -100,7 +100,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if (response.status === 201) {
         alert('Registration successful!');
-        // Lưu token vào localStorage
         window.location.href = '/users/login-page';
       }
     } catch (error) {

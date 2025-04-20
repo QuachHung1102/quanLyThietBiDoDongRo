@@ -204,7 +204,7 @@ const chart4 = new Chart(chartDoom4, {
       x: {},
       y: {
         min: 0,
-        max: 50,
+        max: 2,
       }
     }
   }

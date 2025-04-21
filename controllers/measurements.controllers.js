@@ -123,11 +123,79 @@ const getMeasurementsByIDAndTime = async (req, res) => {
         id: deviceId,
       }
     });
+    if (!device) {
+      return res.status(404).json({ error: 'Device not exist' });
+    }
+    const whereClause = {
+      deviceId,
+    };
 
+    // Xử lý week và month
+    const parsedWeek = week ? parseInt(week.replace('Week ', ''), 10) : null;
+    const parsedMonth = month ? new Date(`${month} 1, ${new Date().getFullYear()}`).getMonth() : null;
+
+    if (parsedWeek && parsedMonth !== null) {
+      const currentYear = new Date().getFullYear();
+
+      // Tính ngày đầu tiên và cuối cùng của tháng
+      const firstDayOfMonth = new Date(currentYear, parsedMonth, 1);
+      const lastDayOfMonth = new Date(currentYear, parsedMonth + 1, 0); // Ngày cuối cùng của tháng
+
+      // Tính ngày bắt đầu của tuần thứ `parsedWeek`
+      const startOfWeek = new Date(firstDayOfMonth);
+      startOfWeek.setDate(firstDayOfMonth.getDate() + (parsedWeek - 1) * 7);
+
+      // Tính ngày kết thúc của tuần thứ `parsedWeek`
+      const endOfWeek = new Date(startOfWeek);
+      endOfWeek.setDate(startOfWeek.getDate() + 6);
+
+      // Giới hạn ngày kết thúc trong phạm vi tháng
+      if (endOfWeek > lastDayOfMonth) {
+        endOfWeek.setDate(lastDayOfMonth.getDate());
+      }
+
+      whereClause.measuredAt = {
+        [Op.between]: [startOfWeek, endOfWeek],
+      };
+    } else if (parsedMonth !== null) {
+      // Nếu chỉ có month, tìm kiếm theo toàn bộ tháng
+      const currentYear = new Date().getFullYear();
+      const firstDayOfMonth = new Date(currentYear, parsedMonth, 1);
+      const lastDayOfMonth = new Date(currentYear, parsedMonth + 1, 0);
+
+      whereClause.measuredAt = {
+        [Op.between]: [firstDayOfMonth, lastDayOfMonth],
+      };
+    } else if (startDate && endDate) {
+      // Kiểm tra nếu startDate và endDate hợp lệ
+      if (new Date(startDate).toString() !== 'Invalid Date' && new Date(endDate).toString() !== 'Invalid Date') {
+        whereClause.measuredAt = {
+          [Op.between]: [new Date(startDate), new Date(endDate)],
+        };
+      } else {
+        return res.status(400).json({ error: 'Invalid startDate or endDate' });
+      }
+    } else {
+      return res.status(400).json({ error: 'Invalid filters. Provide either week and month or startDate and endDate.' });
+    }
+
+    const measurements = await Measurement.findAll({
+      where: whereClause,
+      order: [['measuredAt', 'DESC']],
+    });
+
+    if (measurements.length) {
+      res.status(200).json({
+        measurements: measurements.reverse(),
+        device
+      });
+    } else {
+      res.status(404).json({ error: 'No measurements found for the given filters' });
+    }
   } catch (error) {
-    res.status(500).render('')
+    console.error('Error fetching measurements:', error);
+    res.status(500).json({ error: 'Internal server error' });
   }
-
 }
 
 module.exports = {

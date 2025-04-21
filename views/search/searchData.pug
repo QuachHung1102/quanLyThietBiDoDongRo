@@ -10,7 +10,7 @@ block content
   .container
     h1.search-title.text-center Tra cứu dữ liệu thiết bị
     p.text-center.subtitle Nhập thông tin để tìm kiếm lịch sử đo của thiết bị
-    
+
     .search-container
       .form__control 
         form(action="/getHistory" method="POST" id="searchForm")
@@ -19,19 +19,8 @@ block content
               i.bi.bi-device-hdd.me-2
               | Mã thiết bị:
             input.form-control(type="text" id="deviceId" name="deviceId" placeholder="Nhập mã thiết bị" required)
-          
+
           .form-row
-            .form__group
-              label(for="week") 
-                i.bi.bi-calendar-week.me-2
-                | Tuần:
-              select.form-control(id="week" name="week")
-                option(value="null" selected) -- Chọn tuần --
-                option(value="Week 1") Tuần 1
-                option(value="Week 2") Tuần 2
-                option(value="Week 3") Tuần 3
-                option(value="Week 4") Tuần 4
-            
             .form__group
               label(for="month") 
                 i.bi.bi-calendar-month.me-2
@@ -50,13 +39,23 @@ block content
                 option(value="October") Tháng 10
                 option(value="November") Tháng 11
                 option(value="December") Tháng 12
-              
+            .form__group
+              label(for="week") 
+                i.bi.bi-calendar-week.me-2
+                | Tuần:
+              select.form-control(id="week" name="week")
+                option(value="null" selected) -- Chọn tuần --
+                //- option(value="Week 1") Tuần 1
+                //- option(value="Week 2") Tuần 2
+                //- option(value="Week 3") Tuần 3
+                //- option(value="Week 4") Tuần 4
+
           .form__group.fill__time
             label(for="startDate")
               i.bi.bi-calendar-date.me-2
               | Ngày bắt đầu:
             input.form-control(type="date" id="startDate" name="startDate")
-            
+
             label(for="endDate")
               i.bi.bi-calendar-date.me-2
               | Ngày kết thúc:
@@ -65,34 +64,34 @@ block content
           button.search-button(type="submit")
             i.bi.bi-search.me-2
             | Tìm kiếm
-            
-      .measurement__content.mt-2
+
+      #deviceMeasurement.measurement__content.mt-2
         h2.chart-title.text-center Kết quả tìm kiếm
         .chart__container 
-          .chart-item
+          .chart-item#chart-item1.d-none
             .chart-title
               h3 Dòng rò
             .item-1.item 
-              canvas#chart1
-          .chart-item
+              canvas#chart1(style="width: 100%; height: 100%;")
+          .chart-item#chart-item2.d-none
             .chart-title
               h3 Nhiệt độ
             .item-2.item
-              canvas#chart2
-          .chart-item
+              canvas#chart2(style="width: 100%; height: 100%;")
+          .chart-item#chart-item3.d-none
             .chart-title
               h3 Độ ẩm
             .item-3.item
-              canvas#chart3
-          .chart-item  
+              canvas#chart3(style="width: 100%; height: 100%;")
+          .chart-item#chart-item4.d-none
             .chart-title
               h3 Công suất tiêu hao
             .item-4.item
-              canvas#chart4
-          .chart-item.map-container
+              canvas#chart4(style="width: 100%; height: 100%;")
+          #map-container.chart-item
             .chart-title
               h3 Vị trí thiết bị
-            .item-5.item(style="height: 100%;")
+            .item-5.item
               #map(style="width: 100%; height: 100%;")
 
 block scripts

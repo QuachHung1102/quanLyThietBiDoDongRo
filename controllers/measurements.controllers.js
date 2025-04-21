@@ -116,24 +116,16 @@ const getSearchHistoryPage = async (req, res) => {
 
 // API lấy lịch sử đo của thiết bị theo bộ lọc thời gian
 const getMeasurementsByIDAndTime = async (req, res) => {
-  const { deviceId } = req.params;
-  const { startDate, endDate } = req.query;
   try {
-    const measurementList = await Measurement.findAll({
+    const { deviceId, week, month, startDate, endDate } = req.query;
+    const device = await Device.findOne({
       where: {
-        deviceId,
-        measuredAt: {
-          [Op.between]: [new Date(startDate), new Date(endDate)]
-        }
+        id: deviceId,
       }
     });
-    if (measurementList.length) {
-      res.status(200).json(measurementList);
-    } else {
-      res.status(404).json({ error: 'Device no have measurements' });
-    }
+
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).render('')
   }
 
 }

@@ -4,41 +4,57 @@ block styles
   link(rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/v3.10.0/mapbox-gl.css")
   link(rel="stylesheet" href="/public/stylesheets/style.css")
   link(rel="stylesheet" href="/public/stylesheets/measurement.css")
+  link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css")
 
 block content
   .measurement-container
     .device-info.card
-      h3 Device Information
+      h3 Thông tin thiết bị
       .device-info__grid
         .device-info__item
           i.fa.fa-id-badge
-          span Device ID: #{device.id}
+          span Mã thiết bị: #{device.id}
         .device-info__item
           i.fa.fa-tag
-          span Device Name: #{device.deviceName}
+          span Tên thiết bị: #{device.deviceName}
         .device-info__item
           i.fa.fa-cogs
-          span Device Type: #{device.type}
+          span Loại thiết bị: #{device.type}
         .device-info__item
           i.fa.fa-calendar-alt
-          span Last Checked: #{device.lastChecked ? device.lastChecked : 'Never'}
+          span Lần kiểm tra gần nhất: #{device.lastChecked ? device.lastChecked : 'Chưa kiểm tra'}
         .device-info__item.battery
           i.fa.fa-battery-half
-          span Battery Level: 
+          span Pin: 
           progress(id="battery" max="100" value="0")
           span(id="batteryPercent") 0%
-    .measurement__content
+    .measurement__content.mt-2
       .chart__container 
-        .item-1.item 
-          canvas#chart1
-        .item-2.item
-          canvas#chart2
-        .item-3.item
-          canvas#chart3
-        .item-4.item  
-          canvas#chart4
-        .item-5.item
-          #map(style="height: 100%;")
+        .chart-item
+          .chart-title
+            h3 Dòng rò
+          .item-1.item 
+            canvas#chart1
+        .chart-item
+          .chart-title
+            h3 Nhiệt độ
+          .item-2.item
+            canvas#chart2
+        .chart-item
+          .chart-title
+            h3 Độ ẩm
+          .item-3.item
+            canvas#chart3
+        .chart-item  
+          .chart-title
+            h3 Tổn thất điện áp
+          .item-4.item
+            canvas#chart4
+        .chart-item
+          .chart-title
+            h3 Vị trí thiết bị
+          .item-5.item
+            #map
 
 block scripts
   script.

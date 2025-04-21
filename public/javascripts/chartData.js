@@ -215,7 +215,7 @@ const chart4 = new Chart(chartDoom4, {
 })();
 
 // Tham gia theo dõi thiết bị
-if (!window.location.pathname.split('/').pop() === 'search-history') {
+if (window.location.pathname.split('/').pop() != 'search-history') {
   socket.on('connect', () => {
     console.log(`Connected to socket server`);
     socket.emit('joinDevice', deviceData.id);

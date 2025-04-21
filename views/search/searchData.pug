@@ -4,59 +4,96 @@ block styles
   link(rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/v3.10.0/mapbox-gl.css")
   link(rel="stylesheet" href="/public/stylesheets/style.css")
   link(rel="stylesheet" href="/public/stylesheets/dataSearch.css")
+  link(rel="stylesheet" href="/public/stylesheets/form.css")
 
 block content
-  .search-container
-    .form__control 
-      form(action="/getHistory" method="POST")
-        .form__group
-          label(for="deviceId") Device ID:
-          input(type="text" id="deviceId" name="deviceId" placeholder="Enter Device ID" required)
-        .form__group
-          lebel(for="week") Week:
-          select(id="week" name="week")
-            option(value="Week 1") Week 1
-            option(value="Week 2") Week 2
-            option(value="Week 3") Week 3
-            option(value="Week 4") Week 4
-          label(for="month") Month:
-          select(id="month" name="month")
-            option(value="January") January
-            option(value="February") February
-            option(value="March") March
-            option(value="April") April
-            option(value="May") May
-            option(value="June") June
-            option(value="July") July
-            option(value="August") August
-            option(value="September") September
-            option(value="October") October
-            option(value="November") November
-            option(value="December") December
-          //- label(for="year") Year:
-          //- select(id="year" name="year")
-          //-   each year in [2020, 2021, 2022, 2023]
-          //-     option(value=year) #{year}
+  .container
+    h1.search-title.text-center Tra cứu dữ liệu thiết bị
+    p.text-center.subtitle Nhập thông tin để tìm kiếm lịch sử đo của thiết bị
+    
+    .search-container
+      .form__control 
+        form(action="/getHistory" method="POST" id="searchForm")
+          .form__group
+            label(for="deviceId") 
+              i.bi.bi-device-hdd.me-2
+              | Mã thiết bị:
+            input.form-control(type="text" id="deviceId" name="deviceId" placeholder="Nhập mã thiết bị" required)
+          
+          .form-row
+            .form__group
+              label(for="week") 
+                i.bi.bi-calendar-week.me-2
+                | Tuần:
+              select.form-control(id="week" name="week")
+                option(value="null" selected) -- Chọn tuần --
+                option(value="Week 1") Tuần 1
+                option(value="Week 2") Tuần 2
+                option(value="Week 3") Tuần 3
+                option(value="Week 4") Tuần 4
+            
+            .form__group
+              label(for="month") 
+                i.bi.bi-calendar-month.me-2
+                | Tháng:
+              select.form-control(id="month" name="month")
+                option(value="null" selected) -- Chọn tháng --
+                option(value="January") Tháng 1
+                option(value="February") Tháng 2
+                option(value="March") Tháng 3
+                option(value="April") Tháng 4
+                option(value="May") Tháng 5
+                option(value="June") Tháng 6
+                option(value="July") Tháng 7
+                option(value="August") Tháng 8
+                option(value="September") Tháng 9
+                option(value="October") Tháng 10
+                option(value="November") Tháng 11
+                option(value="December") Tháng 12
+              
+          .form__group.fill__time
+            label(for="startDate")
+              i.bi.bi-calendar-date.me-2
+              | Ngày bắt đầu:
+            input.form-control(type="date" id="startDate" name="startDate")
+            
+            label(for="endDate")
+              i.bi.bi-calendar-date.me-2
+              | Ngày kết thúc:
+            input.form-control(type="date" id="endDate" name="endDate")
 
-        .form__group.fill__time
-          label(for="startDate") Start Date:
-          input(type="date" id="startDate" name="startDate")
-          label(for="endDate") End Date:
-          input(type="date" id="endDate" name="endDate")
-
-        button(type="submit") Search
-    .measurement__content
-      .chart__container 
-        .item-1.item 
-          canvas#chart1
-        .item-2.item
-          canvas#chart2
-        .item-3.item
-          canvas#chart3
-        .item-4.item  
-          canvas#chart4
-        .item-5.item
-          #map(style="height: 100%;")
+          button.search-button(type="submit")
+            i.bi.bi-search.me-2
+            | Tìm kiếm
+            
+      .measurement__content.mt-2
+        h2.chart-title.text-center Kết quả tìm kiếm
+        .chart__container 
+          .chart-item
+            .chart-title
+              h3 Dòng rò
+            .item-1.item 
+              canvas#chart1
+          .chart-item
+            .chart-title
+              h3 Nhiệt độ
+            .item-2.item
+              canvas#chart2
+          .chart-item
+            .chart-title
+              h3 Độ ẩm
+            .item-3.item
+              canvas#chart3
+          .chart-item  
+            .chart-title
+              h3 Công suất tiêu hao
+            .item-4.item
+              canvas#chart4
+          .chart-item.map-container
+            .chart-title
+              h3 Vị trí thiết bị
+            .item-5.item(style="height: 100%;")
+              #map(style="width: 100%; height: 100%;")
 
 block scripts
   script.

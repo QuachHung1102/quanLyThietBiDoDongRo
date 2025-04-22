@@ -1,7 +1,6 @@
 'use strict';
 
-let measurementData;
-let deviceData;
+import { setCoordinates } from "./mapbox.js";
 const date = new Date();
 const charts = []; // Lưu trữ các biểu đồ đã tạo
 
@@ -53,31 +52,39 @@ const createChart = (config, measurementData) => {
   const ctx = document.getElementById(config.id);
   if (!ctx) return;
 
+  // Đảm bảo canvas chiếm toàn bộ khung chứa
   ctx.width = ctx.parentElement.offsetWidth;
   ctx.height = ctx.parentElement.offsetHeight;
 
   const chart = new Chart(ctx, {
     type: "line",
     data: {
-      labels: labels(measurementData),
+      labels: labels(measurementData), // Label chỉ hiển thị ngày
       datasets: [
         {
           label: config.label,
-          data: dataStart(config.flag, measurementData),
+          data: dataStart(config.flag, measurementData), // Dữ liệu đầy đủ
           backgroundColor: [config.backgroundColor],
           borderColor: [config.borderColor],
           borderWidth: 1,
           tension: 0.4,
-          pointRadius: 0,
+          pointRadius: 2,
         },
       ],
     },
     options: {
       animation: { duration: 1000, easing: "easeInOutQuad" },
-      maintainAspectRatio: false,
+      maintainAspectRatio: false, // Đảm bảo biểu đồ chiếm toàn bộ khung chứa
+      responsive: true, // Đảm bảo biểu đồ phản hồi kích thước
       scales: {
         x: {
-          ticks: { autoSkip: true, maxTicksLimit: 10 },
+          ticks: {
+            autoSkip: false, // Không tự động bỏ qua label
+            callback: function (value, index, values) {
+              // Chỉ hiển thị label không rỗng
+              return this.getLabelForValue(value) || null;
+            },
+          },
         },
         y: {
           min: config.yMin,
@@ -88,8 +95,18 @@ const createChart = (config, measurementData) => {
         tooltip: {
           enabled: true,
           callbacks: {
-            title: (tooltipItems) => labels(measurementData)[tooltipItems[0].dataIndex],
-            label: (tooltipItem) => `${config.label}: ${tooltipItem.raw}`,
+            title: (tooltipItems) => {
+              const index = tooltipItems[0].dataIndex;
+              const measuredDate = new Date(measurementData[index]?.measuredAt);
+              const datePart = measuredDate.toLocaleDateString("vi-VN", { year: "numeric", month: "long", day: "numeric" });
+              const timePart = measuredDate.toLocaleTimeString("vi-VN", { hour: "2-digit", minute: "2-digit" });
+              return `${datePart} - ${timePart}`;
+            },
+            label: (tooltipItem) => {
+              const index = tooltipItem.dataIndex;
+              const measurement = measurementData[index];
+              return `${config.label}: ${measurement?.[config.flag] ?? "N/A"}`;
+            },
           },
         },
       },
@@ -100,7 +117,7 @@ const createChart = (config, measurementData) => {
 };
 
 const renderCharts = (measurementData) => {
-  destroyCharts();
+  destroyCharts(); // Hủy các biểu đồ cũ trước khi tạo mới
   chartConfigs.forEach((config) => createChart(config, measurementData));
 };
 
@@ -145,13 +162,12 @@ const handleFormSubmit = async (e) => {
       deviceData = response.data.device;
 
       if (measurementData && measurementData.length > 0) {
-        console.log("Device data:", deviceData);
-        console.log("Measurement data:", measurementData);
-
+        // console.log("Device data:", deviceData);
+        // console.log("Measurement data:", measurementData);
         ["chart-item1", "chart-item2", "chart-item3", "chart-item4"].forEach((id) =>
           document.getElementById(id).classList.remove("d-none")
         );
-
+        setCoordinates(deviceData.coordinates.coordinates, deviceData.name);
         renderCharts(measurementData);
       }
     } else {
@@ -173,19 +189,49 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-const labels = (measurementData) =>
-  measurementData
-    ?.map((measurement) => {
-      if (measurement?.measuredAt) {
-        const measuredDate = new Date(measurement.measuredAt);
-        const options = { month: "long", day: "numeric" };
-        return measuredDate.toLocaleDateString("en-US", options);
-      }
-      return null;
-    })
-    .filter(Boolean);
+const labels = (measurementData) => {
+  if (!measurementData || !Array.isArray(measurementData) || measurementData.length === 0) {
+    return [];
+  }
 
-const dataStart = (flag, measurementData) =>
-  measurementData
-    ?.map((measurement) => measurement?.[flag] ?? null)
-    .filter(Boolean);
+  let previousDate = null; // Lưu trữ ngày trước đó để so sánh
+  return measurementData.map((measurement) => {
+    if (measurement?.measuredAt) {
+      const measuredDate = new Date(measurement.measuredAt);
+      const day = measuredDate.getDate();
+      const month = measuredDate.toLocaleString("vi-VN", { month: "long" }); // Hiển thị tháng bằng tiếng Việt
+
+      // Nếu ngày thay đổi, hiển thị ngày và tháng
+      if (previousDate !== day) {
+        previousDate = day;
+        return `${day}`;
+      }
+
+      // Nếu ngày không thay đổi, hiển thị chuỗi rỗng để giữ khoảng cách
+      return "";
+    }
+    return null;
+  });
+};
+
+const dataStart = (flag, measurementData) => {
+  if (!measurementData || !Array.isArray(measurementData) || measurementData.length === 0) {
+    return [];
+  }
+
+  let result = [];
+  measurementData.forEach((measurement) => {
+    if (measurement && measurement.measuredAt) {
+      if (flag === "leakageCurrent") {
+        result.push(measurement.leakageCurrent);
+      } else if (flag === "temperature") {
+        result.push(measurement.temperature);
+      } else if (flag === "humidity") {
+        result.push(measurement.humidity);
+      } else if (flag === "powerLoss") {
+        result.push(measurement.powerLoss);
+      }
+    }
+  });
+  return result;
+};

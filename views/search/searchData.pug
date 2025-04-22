@@ -13,7 +13,7 @@ block content
 
     .search-container
       .form__control 
-        form(action="/getHistory" method="POST" id="searchForm")
+        form(id="searchForm")
           .form__group
             label(for="deviceId") 
               i.bi.bi-device-hdd.me-2
@@ -97,9 +97,11 @@ block content
 block scripts
   script.
     const mapboxAccessToken = !{JSON.stringify(mapboxToken)};
+    let measurementData;
+    let deviceData;
 
   script(src="https://cdn.jsdelivr.net/npm/chart.js")
   script(src="https://api.mapbox.com/mapbox-gl-js/v3.10.0/mapbox-gl.js")
   script(src="https://cdn.socket.io/4.8.1/socket.io.min.js")
-  script(src="/public/javascripts/searchData.js")
+  script(src="/public/javascripts/searchData.js" type="module")
   script(src="/public/javascripts/mapbox.js" defer type="module")

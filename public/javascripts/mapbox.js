@@ -5,6 +5,27 @@ if (deviceData) {
   coordinates = deviceData.coordinates.coordinates;
 }
 
+export const setCoordinates = (newCoordinates) => {
+  coordinates = newCoordinates;
+  map.setCenter(coordinates);
+  map.setZoom(13); // Reset zoom to 13 when coordinates change
+  addMarkers({
+    features: [
+      {
+        type: 'Feature',
+        geometry: {
+          type: 'Point',
+          coordinates: coordinates,
+        },
+        properties: {
+          title: deviceData ? deviceData.deviceName : [0, 0],
+          description: coordinates,
+        }
+      }
+    ]
+  });
+}
+
 const geojson = {
   type: 'FeatureCollection',
   features: [
@@ -51,23 +72,25 @@ map.on('style.load', () => {
 });
 
 // add markers to map
-for (const feature of geojson.features) {
-  const el = document.createElement('div');
-  el.className = 'marker';
+const addMarkers = (geojson) => {
+  for (const feature of geojson.features) {
+    const el = document.createElement('div');
+    el.className = 'marker';
 
-  // make a marker for each feature and add to the map
-  new mapboxgl.Marker(el)
-    .setLngLat(feature.geometry.coordinates)
-    .setPopup(
-      new mapboxgl.Popup({ offset: 25 }) // add popups
-        .setHTML(
-          `
+    // make a marker for each feature and add to the map
+    new mapboxgl.Marker(el)
+      .setLngLat(feature.geometry.coordinates)
+      .setPopup(
+        new mapboxgl.Popup({ offset: 25 }) // add popups
+          .setHTML(
+            `
             <h3>${feature.properties.title || ''}</h3>
             <p>${feature.geometry.coordinates || ''}</p>
           `
-        )
-    )
-    .addTo(map);
+          )
+      )
+      .addTo(map);
+  }
 }
 
 // The following values can be changed to control rotation speed:
@@ -112,4 +135,7 @@ map.on('moveend', () => {
   spinGlobe();
 });
 
+if (deviceData) {
+  addMarkers(geojson);
+}
 spinGlobe();

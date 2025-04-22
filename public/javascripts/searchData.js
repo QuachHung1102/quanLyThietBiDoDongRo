@@ -7,7 +7,7 @@ const charts = []; // Lưu trữ các biểu đồ đã tạo
 const chartConfigs = [
   {
     id: "chart1",
-    label: "Dòng rò (Ampere)",
+    label: "Dòng rò (mA)",
     flag: "leakageCurrent",
     backgroundColor: "rgba(255, 206, 86, 0.2)", // Màu vàng
     borderColor: "rgba(255, 206, 86, 1)", // Màu vàng

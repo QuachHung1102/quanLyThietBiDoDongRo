@@ -43,7 +43,7 @@ const chart1 = new Chart(chartDoom1, {
     labels: labels(),
     datasets: [
       {
-        label: 'Leakage Current (Mili Ampere)',
+        label: 'Leakage Current (mA)',
         data: dataStart('leakageCurrent'),
         backgroundColor: [
           // "rgba(255, 99, 132, 0.2)", // Màu đỏ

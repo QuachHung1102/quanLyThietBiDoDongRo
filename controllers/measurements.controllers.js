@@ -1,15 +1,58 @@
 const { where, Op } = require('sequelize');
 const { Measurement, Device } = require('../models');
 const socket = require('../socket');
+const { getWeather } = require('../utils/get-weather');
+
+// Taọ một bản ghi chú đo đạc mới cho các thiết bị.
+// let weatherDatas = Object.create(null);
+let weatherDatas = {};
+
+let dateNow = new Date();
+
+const updateWeatherData = async () => {
+  try {
+    if (date) {
+
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 
 const createMeasurement = async (req, res) => {
+  // const timeString = `${dateNow.getHours().toString().padStart(2, '0')}:${dateNow.getMinutes().toString().padStart(2, '0')}`; // Lấy giờ và phút
+  // console.log(timeString);
+  const formatter = new Intl.DateTimeFormat('vi-VN', { hour: '2-digit', minute: '2-digit' });
+  // console.log(formatter.format(new Date()));
+
+
   try {
     const data = req.body;
+    const timeDifference = new Date() - dateNow;
+    console.log(`${timeDifference} when dateNow is ${dateNow}`);
     const device = await Device.findOne({
       where: {
         id: data.deviceId,
       }
     });
+    if (timeDifference > (1800000) || !timeDifference) { // 30 phút
+      console.log('Weather data is outdated, fetching new data...');
+      dateNow = new Date();
+      const weatherData = await getWeather(device.coordinates.coordinates);
+      // console.log(weatherData.current);
+      weatherDatas[`${device.id}`] = weatherData.current;
+      data.temperature = weatherDatas[`${device.id}`].temp;
+      data.humidity = weatherDatas[`${device.id}`].humidity;
+    } else {
+      console.log(`Time difference is less than 30 minutes, using cached data.`);
+      const weatherData = await getWeather(device.coordinates.coordinates);
+      // console.log(weatherData.current);
+      weatherDatas[`${device.id}`] = weatherData.current;
+      data.temperature = weatherDatas[`${device.id}`].temp;
+      data.humidity = weatherDatas[`${device.id}`].humidity;
+    }
+
     const notEmpty = Object.values(data).every((val) => val !== null && val !== undefined);
     if (!notEmpty) {
       return res.status(400).json({ error: 'Please provide all required fields' });

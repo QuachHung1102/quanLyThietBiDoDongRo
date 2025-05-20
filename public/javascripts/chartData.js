@@ -10,6 +10,7 @@ const date = new Date();
 const labels = function () {
   let result = [];
   measurementData.forEach(measurement => {
+    // Khi tạo giờ và phút thư viện sẽ tự động chuyển đổi múi giờ từ UTC sang múi giờ của máy tính
     const hours = new Date(measurement.measuredAt).getHours();
     const minutes = new Date(measurement.measuredAt).getMinutes();
     if (new Date(measurement.measuredAt).getDate() === date.getDate()) {

@@ -30,7 +30,7 @@ userRouter.get('/login-page', getLoginPage);
 userRouter.post('/login', login);
 userRouter.post('/upload-avatar', authenticate, uploadImage(`avatar`), uploadAvatar);
 userRouter.get('/', authenticate, authorize(type), getAllUsers);
-userRouter.get('/all-trip', authenticate, getAllTripUser);
+// userRouter.get('/all-trip', authenticate, getAllTripUser);
 userRouter.put('/:id', authenticate, authorize(type), updateUser);
 userRouter.delete('/:id', authenticate, authorize(type), deleteUser);
 userRouter.post('/authenticate', authenticate, (req, res) => {

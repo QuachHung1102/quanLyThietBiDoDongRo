@@ -7,8 +7,6 @@ const { getWeather } = require('../utils/get-weather');
 // let weatherDatas = Object.create(null);
 let weatherDatas = {};
 
-let dateNow = new Date();
-
 const updateWeatherData = async () => {
   try {
     if (date) {
@@ -29,29 +27,35 @@ const createMeasurement = async (req, res) => {
 
   try {
     const data = req.body;
-    const timeDifference = new Date() - dateNow;
-    console.log(`${timeDifference} when dateNow is ${dateNow}`);
     const device = await Device.findOne({
       where: {
         id: data.deviceId,
       }
     });
-    if (timeDifference > (1800000) || !timeDifference) { // 30 phút
-      console.log('Weather data is outdated, fetching new data...');
-      dateNow = new Date();
-      const weatherData = await getWeather(device.coordinates.coordinates);
-      // console.log(weatherData.current);
-      weatherDatas[`${device.id}`] = weatherData.current;
-      data.temperature = weatherDatas[`${device.id}`].temp;
-      data.humidity = weatherDatas[`${device.id}`].humidity;
-    } else {
-      console.log(`Time difference is less than 30 minutes, using cached data.`);
-      const weatherData = await getWeather(device.coordinates.coordinates);
-      // console.log(weatherData.current);
-      weatherDatas[`${device.id}`] = weatherData.current;
-      data.temperature = weatherDatas[`${device.id}`].temp;
-      data.humidity = weatherDatas[`${device.id}`].humidity;
+
+    // Lưu cache riêng cho từng device
+    if (!weatherDatas[`${device.id}`]) {
+      weatherDatas[`${device.id}`] = {
+        lastUpdate: 0,
+        data: null
+      };
     }
+
+    const now = Date.now();
+    const cache = weatherDatas[`${device.id}`];
+    const timeDifference = now - cache.lastUpdate;
+
+    if (timeDifference > 1800000 || !cache.data) { // 30 phút
+      console.log('Weather data is outdated, fetching new data...');
+      const weatherData = await getWeather(device.coordinates.coordinates);
+      cache.data = weatherData.current;
+      cache.lastUpdate = now;
+    } else {
+      console.log('Using cached weather data.');
+    }
+
+    data.temperature = cache.data.temp;
+    data.humidity = cache.data.humidity;
 
     const notEmpty = Object.values(data).every((val) => val !== null && val !== undefined);
     if (!notEmpty) {

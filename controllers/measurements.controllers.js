@@ -7,17 +7,6 @@ const { getWeather } = require('../utils/get-weather');
 // let weatherDatas = Object.create(null);
 let weatherDatas = {};
 
-const updateWeatherData = async () => {
-  try {
-    if (date) {
-
-    }
-  } catch (error) {
-    console.log(error);
-  }
-}
-
-
 const createMeasurement = async (req, res) => {
   // const timeString = `${dateNow.getHours().toString().padStart(2, '0')}:${dateNow.getMinutes().toString().padStart(2, '0')}`; // Lấy giờ và phút
   // console.log(timeString);
@@ -45,17 +34,35 @@ const createMeasurement = async (req, res) => {
     const cache = weatherDatas[`${device.id}`];
     const timeDifference = now - cache.lastUpdate;
 
+    let weatherError = false;
     if (timeDifference > 1800000 || !cache.data) { // 30 phút
-      console.log('Weather data is outdated, fetching new data...');
-      const weatherData = await getWeather(device.coordinates.coordinates);
-      cache.data = weatherData.current;
-      cache.lastUpdate = now;
+      try {
+        const weatherData = await getWeather(device.coordinates.coordinates);
+        if (weatherData && weatherData.current) {
+          cache.data = weatherData.current;
+          cache.lastUpdate = now;
+        } else {
+          weatherError = true;
+        }
+      } catch (err) {
+        weatherError = true;
+      }
     } else {
       console.log('Using cached weather data.');
     }
 
-    data.temperature = cache.data.temp;
-    data.humidity = cache.data.humidity;
+    if (
+      weatherError ||
+      !cache.data ||
+      typeof cache.data.temp === 'undefined' ||
+      typeof cache.data.humidity === 'undefined'
+    ) {
+      data.temperature = 0;
+      data.humidity = 0;
+    } else {
+      data.temperature = cache.data.temp;
+      data.humidity = cache.data.humidity;
+    }
 
     const notEmpty = Object.values(data).every((val) => val !== null && val !== undefined);
     if (!notEmpty) {
